@@ -1,5 +1,6 @@
 import { Reveal } from "./Reveal";
 import { PROJECT_ART } from "./art/ProjectArt";
+import { Plate } from "./Plate";
 import type { Project } from "@/data/portfolio";
 
 /**
@@ -24,12 +25,22 @@ export function ProjectSection({ project, index }: { project: Project; index: nu
         flagship ? "min-h-[96svh] py-[calc(var(--section-y)*1.15)]" : "py-[var(--section-y)]"
       }`}
     >
-      {/* Flagship: art is the ground the type sits on.
+      {/* Flagship: the ground the type sits on.
           z-0 rather than a negative z-index — html/body have an opaque
-          background, and negative z-index would paint the art behind it. */}
-      {flagship && Art && (
-        <div className="pointer-events-none absolute inset-0 z-0 opacity-70">
-          <Art className="h-full w-full" />
+          background, and negative z-index would paint this behind it.
+          The plate carries the archival image; the drawn diagram rides on top,
+          which is the "diagrams layered over historical imagery" the brief asks
+          for and reads better than either alone. */}
+      {flagship && (
+        <div className="pointer-events-none absolute inset-0 z-0">
+          {project.plate && (
+            <Plate src={project.plate.src} alt="" className="h-full w-full" opacity={0.5} />
+          )}
+          {Art && (
+            <div className="absolute inset-0 opacity-70">
+              <Art className="h-full w-full" />
+            </div>
+          )}
         </div>
       )}
 
@@ -49,11 +60,21 @@ export function ProjectSection({ project, index }: { project: Project; index: nu
             : `relative z-10 grid items-center gap-[calc(var(--vsq)*5)] lg:grid-cols-2`
         }
       >
-        {/* ---- Art ---- */}
-        {!flagship && Art && (
+        {/* ---- Art: archival plate where one exists, drawn diagram otherwise ---- */}
+        {!flagship && (Art || project.plate) && (
           <div className={`relative ${artFirst ? "lg:order-1" : "lg:order-2"}`}>
             <div className="group relative aspect-[4/3] overflow-hidden">
-              <Art className="h-full w-full transition-[filter,transform] duration-[1400ms] ease-[var(--ease-cine)] group-hover:scale-[1.03] group-hover:contrast-125" />
+              {project.plate ? (
+                <Plate
+                  src={project.plate.src}
+                  alt={project.plate.alt}
+                  className="h-full w-full transition-transform duration-[1400ms] ease-[var(--ease-cine)] group-hover:scale-[1.03]"
+                />
+              ) : (
+                Art && (
+                  <Art className="h-full w-full transition-[filter,transform] duration-[1400ms] ease-[var(--ease-cine)] group-hover:scale-[1.03] group-hover:contrast-125" />
+                )
+              )}
             </div>
           </div>
         )}

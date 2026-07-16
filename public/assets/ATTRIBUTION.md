@@ -4,16 +4,57 @@ _Last verified: 2026-07-16_
 
 ## Summary
 
-**Every visual on this site is original SVG, authored in this repository.**
+The site uses two kinds of visual, both documented below:
 
-There are no external image assets. No museum scans, no stock photography, no
-public-domain reproductions, no AI-generated imagery, and nothing traced from or
-copied off the Hermes Agent reference site.
+1. **Archival photographic plates** — public-domain and CC0 sources from
+   Wikimedia Commons, heavily transformed (see _Processing_). Listed in full.
+2. **Original SVG artwork** — authored in this repository.
 
-This means the site has **no third-party image licence obligations**. It also
-means there is nothing to re-clear if the site is redeployed elsewhere.
+No stock photography, no AI-generated imagery, and nothing traced from or copied
+off the Hermes Agent reference site. Every third-party source is public domain or
+CC0, so there are **no attribution-required licences** — the credits below are
+kept because they are correct practice, not because a licence compels them.
 
-## Where the artwork lives
+---
+
+## Archival plates
+
+Sources downloaded by `scripts/fetch-assets.mjs`, which verifies each licence via
+the Commons API rather than trusting the filename. Originals are kept in
+`assets-src/` (untracked); baked output is `public/img/*.webp`.
+
+| Plate | Source work | Author | Licence | Commons |
+|---|---|---|---|---|
+| `map-arabia` | *Carte de l'Arabie*, 1771 | Rigobert Bonne | Public domain | [file](https://commons.wikimedia.org/wiki/File:1771_Bonne_Map_of_Arabia_-_Geographicus_-_Arabia-bonne-1771.jpg) |
+| `map-idrisi` | Al-Idrisi's world map | unknown | Public domain | [file](https://commons.wikimedia.org/wiki/File:Al-Idrisi%27s_world_map.JPG) |
+| `manuscript` | Tashelhit manuscript IV, Arabic script, p.1 | Mohammed Awzal | Public domain | [file](https://commons.wikimedia.org/wiki/File:Tashelhit_manuscript_IV_in_Arabic_script_page_1.jpg) |
+| `medical-ms` | Cheshm (ophthalmological) manuscript | unknown | Public domain | [file](https://commons.wikimedia.org/wiki/File:Cheshm_manuscript.jpg) |
+| `courtyard` | Islam Khodja madrasa, Khiva | Bgag | CC0 | [file](https://commons.wikimedia.org/wiki/File:Islam_Khodja_Madrasa_04.jpg) |
+| `geometry` | Zellij, Place El-Hedine, Meknes | unknown | Public domain | [file](https://commons.wikimedia.org/wiki/File:Mekhnes_Place_El-Hedine_Mosaique.jpg) |
+
+`astrolabe` (CC0, Gary Todd) was fetched but **is not used** — a flat brass disc
+with no linework survives dithering as a solid blob. Kept in `assets-src/` only.
+
+### Processing
+
+`scripts/dither.mjs` transforms each source rather than reproducing it:
+resize → grayscale → normalise → CLAHE local equalisation → invert → contrast/gamma
+→ horizontal line-screen with a Bayer 4×4 ordered dither → duotone (pure black +
+`--paper`) → lossless webp.
+
+The output is 1-bit two-colour art, composited with `mix-blend-mode: screen` so
+the black drops out to the page. None of these reads as an unedited museum image.
+
+### Where used
+
+`map-arabia` → Shepherd-AI · `courtyard` → Halaqaat · `manuscript` → Youth Ink
+Network · `geometry` → BiQiyas · `medical-ms` → Glucose Guardian ·
+`map-idrisi` → hero ground layer.
+
+## Where the original SVG artwork lives
+
+Used where no suitable archival source exists, and layered *over* the plates on
+the hero and the flagship.
 
 | Artwork | File | Subject |
 |---|---|---|
@@ -76,5 +117,10 @@ files from the reference site are copied or redistributed.
 
 ## If you add external imagery later
 
-Add a row here recording **source, file, author, licence, and URL** before the
-asset ships, and keep the "no third-party assets" claim above accurate.
+Add the Commons `File:` title to `WANTED` in `scripts/fetch-assets.mjs` and run
+it — it verifies the licence via the API and refuses anything that isn't PD/CC0.
+Then add a tuning entry in `scripts/dither.mjs` and a row to the table above.
+
+Do not hand-drop images into `public/img/`: they'd skip the licence check and the
+dither, and would composite wrong (a non-black shadow shows the plate's
+rectangle under `screen`).

@@ -26,6 +26,13 @@ export type Project = {
   href: string | null;
   /** The historical thread this project is placed against. */
   lineage: string;
+  /**
+   * Baked dither plate from a public-domain archival source. Where a project has
+   * one, the photograph replaces the drawn SVG. Where it doesn't, the SVG stands
+   * — a real archival image beats a diagram, but a diagram beats a bad match.
+   * Sources and licences: public/assets/ATTRIBUTION.md
+   */
+  plate?: { src: string; alt: string };
   flagship?: boolean;
 };
 
@@ -55,6 +62,10 @@ export const projects: Project[] = [
     href: null,
     lineage:
       "Navigation, command, and coordination across distance — the problem of moving intent safely between cities, and the routes that carried it.",
+    plate: {
+      src: "/img/map-arabia.webp",
+      alt: "Rigobert Bonne's 1771 map of Arabia, processed to a one-bit line-screen dither.",
+    },
     flagship: true,
   },
   {
@@ -69,6 +80,10 @@ export const projects: Project[] = [
     href: null,
     lineage:
       "Knowledge transmitted in circles — the madrasa courtyard, the study hall, and the unbroken chain between teacher and student.",
+    plate: {
+      src: "/img/courtyard.webp",
+      alt: "Courtyard of the Islam Khodja madrasa, Khiva, rendered as a one-bit line-screen dither.",
+    },
   },
   {
     id: "youth-ink-network",
@@ -81,6 +96,10 @@ export const projects: Project[] = [
     href: null,
     lineage:
       "The written tradition — ink, parchment, marginalia, and the labour of copying and correcting a text so it survives.",
+    plate: {
+      src: "/img/manuscript.webp",
+      alt: "A page of an Arabic-script manuscript, rendered as a one-bit line-screen dither.",
+    },
   },
   {
     id: "biqiyas",
@@ -93,6 +112,10 @@ export const projects: Project[] = [
     href: null,
     lineage:
       "Measure and method — algebraic notation, geometric construction, and the systematic exercise as a way of learning.",
+    plate: {
+      src: "/img/geometry.webp",
+      alt: "Zellij tilework at Place El-Hedine, Meknes, rendered as a one-bit line-screen dither.",
+    },
   },
   {
     id: "glucose-guardian",
@@ -105,6 +128,10 @@ export const projects: Project[] = [
     href: null,
     lineage:
       "The bimaristan and the medical manuscript — observation recorded carefully enough to act on.",
+    plate: {
+      src: "/img/medical-ms.webp",
+      alt: "A page from a Persian ophthalmological manuscript, rendered as a one-bit line-screen dither.",
+    },
   },
 ];
 

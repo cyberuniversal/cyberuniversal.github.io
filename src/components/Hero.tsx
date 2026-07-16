@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { HeroArt } from "./art/HeroArt";
+import { Plate } from "./Plate";
 import { profile, contact } from "@/data/portfolio";
 
 /**
@@ -46,12 +47,23 @@ export function Hero() {
         className="pointer-events-none absolute inset-0 z-0"
         style={{ transform: `translate3d(0, ${y * 0.18}px, 0) scale(1.06)` }}
       >
+        {/* Al-Idrisi's world map as the ground the city stands on: the drawn
+            arcade and route lines sit over a real archival plate, so the
+            historical and technical layers share one surface instead of the
+            diagram floating on flat colour. Kept low so the name still leads. */}
+        <Plate
+          src="/img/map-idrisi.webp"
+          alt=""
+          className="absolute inset-0 h-full w-full origin-center scale-125"
+          opacity={0.28}
+        />
+
         {/* Deliberate mobile crop: at 390px the slice already shows only the
             centre of the composition, leaving a tall empty sky. Scaling from the
             bottom edge pushes the skyline and arcade up into the frame so the
             hero still carries weight, rather than reading as a compressed
             desktop layout. */}
-        <HeroArt className="h-full w-full origin-bottom scale-[1.5] md:scale-100" />
+        <HeroArt className="relative h-full w-full origin-bottom scale-[1.5] md:scale-100" />
       </div>
 
       {/* Scanlines — restrained, only over the art */}
