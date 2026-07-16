@@ -24,9 +24,13 @@ function DeskArt() {
           <feTurbulence type="fractalNoise" baseFrequency="0.016" numOctaves="3" seed="4" result="t" />
           <feDisplacementMap in="SourceGraphic" in2="t" scale="16" xChannelSelector="R" yChannelSelector="G" />
         </filter>
-        <radialGradient id="ab-vig" cx="50%" cy="46%" r="70%">
+        {/* Holds strength across the centre; falls away only at the frame.
+            Matches the curve used in ProjectArt — the earlier 0.72-at-58% stop
+            dimmed the whole drawing rather than just its edges. */}
+        <radialGradient id="ab-vig" cx="50%" cy="52%" r="76%">
           <stop offset="0%" stopColor="#fff" stopOpacity="1" />
-          <stop offset="58%" stopColor="#fff" stopOpacity="0.72" />
+          <stop offset="62%" stopColor="#fff" stopOpacity="0.95" />
+          <stop offset="86%" stopColor="#fff" stopOpacity="0.5" />
           <stop offset="100%" stopColor="#fff" stopOpacity="0" />
         </radialGradient>
         <mask id="ab-mask">
@@ -120,7 +124,8 @@ export function About() {
       className="border-t border-[var(--line)] px-[var(--edge)] py-[var(--section-y)]"
     >
       <div className="grid items-center gap-[calc(var(--vsq)*6)] lg:grid-cols-[0.85fr_1fr]">
-        <div className="relative aspect-[4/5] w-full opacity-80">
+        {/* Aspect matches the 640×720 viewBox so the framing arch isn't sliced. */}
+        <div className="relative aspect-[640/720] w-full">
           <DeskArt />
         </div>
 

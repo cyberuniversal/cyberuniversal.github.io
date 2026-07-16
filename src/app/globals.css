@@ -13,7 +13,11 @@
   --teal-black: #061b18;
   --surface: #0a211d;
   --oxidized-teal: #17433b;
-  --muted-teal: #58766f;
+  /* Lightened from the brief's suggested #58766f, which measures 3.89:1 against
+     --ink — below the 4.5:1 WCAG AA floor for small text, and every mono label,
+     annotation and Arabic accent on the site uses it. #6b8a82 measures 5.1:1
+     and keeps the same muted archival cast. Verified by scripts/contrast.mjs. */
+  --muted-teal: #6b8a82;
   --paper: #e9e1cf;
   --paper-muted: #aaa99f;
   --line: rgba(233, 225, 207, 0.18);
@@ -28,9 +32,14 @@
   --measure: 62ch;
 
   /* Typography --------------------------------------------- */
-  --fs-display: clamp(5rem, 13vw, 13rem);
-  --fs-title: clamp(2.75rem, 7vw, 6.5rem);
-  --fs-statement: clamp(1.75rem, 4.2vw, 3.75rem);
+  /* Floors are set by what actually fits at 390px, not by the brief's suggested
+     clamp(5rem, 13vw, 13rem): at 390px the 13vw term is ~51px but the 5rem floor
+     forces 80px, which clips "ALNUWAISER" off the viewport. The floor — not the
+     scaling — was the bug. These keep the type monumental (11.5vw still fills
+     the screen edge-to-edge on mobile) while fitting inside --edge gutters. */
+  --fs-display: clamp(2.6rem, 13vw, 13rem);
+  --fs-title: clamp(2rem, 6.2vw, 6.5rem);
+  --fs-statement: clamp(1.5rem, 4.2vw, 3.75rem);
   --lh-display: 0.88; /* measured from the reference */
   --lh-title: 0.94;
   --tracking-display: 0.02em;
@@ -123,6 +132,18 @@ body {
   text-transform: uppercase;
   letter-spacing: var(--tracking-meta);
   color: var(--muted-teal);
+}
+
+/* Annotation: mono voice, but readable prose rather than a metadata label.
+   A separate class because these custom classes are declared after Tailwind's
+   utilities, so `normal-case` loses the specificity tie against .u-meta. */
+.u-note {
+  font-family: var(--font-mono);
+  font-size: clamp(0.75rem, 0.85vw, 0.8125rem);
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+  color: var(--muted-teal);
+  text-transform: none;
 }
 
 .u-measure {

@@ -149,12 +149,16 @@ export function ArchiveBreak({
       aria-label={`${code} — ${title}`}
       className="relative overflow-hidden border-t border-[var(--line)]"
     >
-      <div className="relative h-[clamp(15rem,36vh,24rem)] w-full">
+      {/* Aspect-locked to the viewBox (1200:380). With a fixed height the slice
+          crop cut the Round City's gates and the Damascus plan off at top and
+          bottom; matching the ratio means the drawing is never truncated at any
+          width, and it thins into a quiet archival band on mobile. */}
+      <div className="relative aspect-[1200/380] w-full">
         <svg
           aria-hidden="true"
           viewBox="0 0 1200 380"
           preserveAspectRatio="xMidYMid slice"
-          className="h-full w-full opacity-60"
+          className="h-full w-full opacity-85"
         >
           <defs>
             <filter id={`ab-${title}-rough`} x="-20%" y="-20%" width="140%" height="140%">
@@ -163,7 +167,8 @@ export function ArchiveBreak({
             </filter>
             <linearGradient id={`ab-${title}-fade`} x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#fff" stopOpacity="0" />
-              <stop offset="42%" stopColor="#fff" stopOpacity="0.85" />
+              <stop offset="26%" stopColor="#fff" stopOpacity="0.95" />
+              <stop offset="72%" stopColor="#fff" stopOpacity="0.95" />
               <stop offset="100%" stopColor="#fff" stopOpacity="0" />
             </linearGradient>
             <mask id={`ab-${title}-mask`}>

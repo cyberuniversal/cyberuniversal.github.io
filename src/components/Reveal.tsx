@@ -30,8 +30,13 @@ export function Reveal({
     if (!el) return;
 
     // If IO is unavailable, show content rather than hiding it forever.
+    // Written straight to the DOM rather than via setState: lazily initialising
+    // this in useState would evaluate `typeof IntersectionObserver` on the
+    // server (always undefined) and disagree with the client on hydration,
+    // while setState here fires a cascading render the moment the effect runs.
+    // No re-render follows, so React never clobbers the attribute.
     if (typeof IntersectionObserver === "undefined") {
-      setInView(true);
+      el.dataset.inview = "true";
       return;
     }
 

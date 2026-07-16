@@ -1,33 +1,46 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { Reveal } from "./Reveal";
 import { contact } from "@/data/portfolio";
+
+const fmtRiyadh = () =>
+  new Intl.DateTimeFormat("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "Asia/Riyadh",
+    hour12: false,
+  }).format(new Date());
+
+/* getSnapshot must be referentially stable between renders or React loops
+   forever. The formatted string only changes once a minute, so cache it and
+   return the same reference until the minute ticks over. */
+let cached = "";
+const getSnapshot = () => {
+  const next = fmtRiyadh();
+  if (next !== cached) cached = next;
+  return cached;
+};
+
+/* Server (and hydration) render nothing — a time formatted during SSR would
+   disagree with the client and produce a mismatch. */
+const getServerSnapshot = () => null;
+
+const subscribe = (onChange: () => void) => {
+  const id = setInterval(onChange, 30_000);
+  return () => clearInterval(id);
+};
 
 /**
  * Local time in Riyadh.
  *
- * Rendered as null on the server and on the first client paint, then filled in
- * an effect. A time formatted during SSR would disagree with the client's first
- * render and produce a hydration mismatch — this avoids that by construction
- * rather than by suppressing the warning.
+ * useSyncExternalStore rather than useState+useEffect: it reads the server
+ * snapshot during hydration and only then switches to the live value, so the
+ * markup matches by construction. It also avoids calling setState inside an
+ * effect body, which cascades renders (react-hooks/set-state-in-effect).
  */
 function LocalTime() {
-  const [time, setTime] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fmt = () =>
-      new Intl.DateTimeFormat("en-GB", {
-        hour: "2-digit",
-        minute: "2-digit",
-        timeZone: "Asia/Riyadh",
-        hour12: false,
-      }).format(new Date());
-
-    setTime(fmt());
-    const id = setInterval(() => setTime(fmt()), 30_000);
-    return () => clearInterval(id);
-  }, []);
+  const time = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   // Reserve the width so filling it in causes no layout shift.
   return (

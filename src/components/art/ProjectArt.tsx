@@ -18,9 +18,13 @@ function Defs({ id }: { id: string }) {
         <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" seed="5" result="t" />
         <feDisplacementMap in="SourceGraphic" in2="t" scale="18" xChannelSelector="R" yChannelSelector="G" />
       </filter>
-      <radialGradient id={`${id}-vig`} cx="50%" cy="50%" r="70%">
+      {/* Holds near-full strength across the centre and only falls away at the
+          frame. The earlier 0.7-at-60% curve dimmed the whole drawing, not just
+          its edges, and the art read as washed out rather than fading. */}
+      <radialGradient id={`${id}-vig`} cx="50%" cy="50%" r="74%">
         <stop offset="0%" stopColor="#fff" stopOpacity="1" />
-        <stop offset="60%" stopColor="#fff" stopOpacity="0.7" />
+        <stop offset="62%" stopColor="#fff" stopOpacity="0.95" />
+        <stop offset="86%" stopColor="#fff" stopOpacity="0.5" />
         <stop offset="100%" stopColor="#fff" stopOpacity="0" />
       </radialGradient>
       <mask id={`${id}-mask`}>

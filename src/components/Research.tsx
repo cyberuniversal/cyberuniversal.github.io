@@ -46,7 +46,7 @@ export function Research() {
         ))}
       </ol>
 
-      <p className="u-meta mt-[calc(var(--vsq)*3)] normal-case tracking-normal text-[var(--muted-teal)]">
+      <p className="u-note u-measure mt-[calc(var(--vsq)*3)]">
         Research interests: natural-language mission planning, human-in-the-loop
         autonomy, and the safety constraints that keep autonomous systems
         answerable to a person.

@@ -35,7 +35,7 @@ for (const vp of VIEWPORTS) {
   // Hero (first viewport)
   await page.screenshot({ path: `${OUT}/${vp.name}-hero.png` });
 
-  // Horizontal overflow check at this width
+  // Horizontal overflow check at this width.
   const overflow = await page.evaluate(() => ({
     scrollW: document.documentElement.scrollWidth,
     clientW: document.documentElement.clientWidth,
@@ -43,6 +43,29 @@ for (const vp of VIEWPORTS) {
   if (overflow.scrollW > overflow.clientW + 1) {
     problems.push(`${vp.name}: HORIZONTAL OVERFLOW ${overflow.scrollW} > ${overflow.clientW}`);
   }
+
+  // `overflow-x: hidden` on <body> suppresses the scrollbar, so the check above
+  // passes even when text is clipped off-screen. Measure text boxes directly
+  // against the viewport instead — this is what caught the hero name being cut.
+  const clipped = await page.evaluate(() => {
+    const out = [];
+    const vw = document.documentElement.clientWidth;
+    document.querySelectorAll("h1, h2, h3, p, a, li, dd, dt").forEach((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.width === 0) return;
+      // Skip visually-hidden helpers (sr-only skip link is a 1px clip by design)
+      if (r.width <= 2 && r.height <= 2) return;
+      if (r.right > vw + 1 || r.left < -1) {
+        out.push(`${el.tagName}<${(el.textContent || "").trim().slice(0, 22)}> right=${Math.round(r.right)} vw=${vw}`);
+      }
+      // Text wider than its own box = clipped by an ancestor's overflow:hidden
+      if (el.scrollWidth > el.clientWidth + 1 && getComputedStyle(el).overflow !== "visible") {
+        out.push(`${el.tagName}<${(el.textContent || "").trim().slice(0, 22)}> scrollW=${el.scrollWidth} > clientW=${el.clientWidth}`);
+      }
+    });
+    return [...new Set(out)];
+  });
+  if (clipped.length) problems.push(`${vp.name} CLIPPED TEXT:\n  - ${clipped.slice(0, 8).join("\n  - ")}`);
 
   // Scroll through and capture full page
   await page.evaluate(async () => {

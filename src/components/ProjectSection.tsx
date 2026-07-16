@@ -55,9 +55,6 @@ export function ProjectSection({ project, index }: { project: Project; index: nu
             <div className="group relative aspect-[4/3] overflow-hidden">
               <Art className="h-full w-full transition-[filter,transform] duration-[1400ms] ease-[var(--ease-cine)] group-hover:scale-[1.03] group-hover:contrast-125" />
             </div>
-            <p className="u-meta mt-[calc(var(--vsq)*1.6)] max-w-[46ch] normal-case tracking-normal text-[var(--muted-teal)]">
-              {project.lineage}
-            </p>
           </div>
         )}
 
@@ -85,27 +82,33 @@ export function ProjectSection({ project, index }: { project: Project; index: nu
             {project.purpose}
           </p>
 
-          {flagship && (
-            <p className="u-fade u-measure mt-[calc(var(--vsq)*2)] text-[var(--paper-muted)]">
-              {project.lineage}
-            </p>
-          )}
+          {/* The historical lineage sits in the text column, in the mono voice
+              but as prose. It also gives the column body when role/status are
+              absent, which otherwise leaves the composition lopsided. */}
+          <div className="u-fade mt-[calc(var(--vsq)*2.5)] flex max-w-[46ch] gap-[calc(var(--vsq)*1.5)]">
+            <span aria-hidden="true" className="mt-[0.6em] h-px w-[calc(var(--vsq)*3)] shrink-0 bg-[var(--line-strong)]" />
+            <p className="u-note">{project.lineage}</p>
+          </div>
 
-          {/* Metadata ledger — only what's real */}
-          <dl className="u-fade mt-[calc(var(--vsq)*4)] flex flex-wrap gap-x-[calc(var(--vsq)*5)] gap-y-[calc(var(--vsq)*1.5)]">
-            {project.role && (
-              <div>
-                <dt className="u-meta">Role</dt>
-                <dd className="u-meta !text-[var(--paper)]">{project.role}</dd>
-              </div>
-            )}
-            {project.status && (
-              <div>
-                <dt className="u-meta">Status</dt>
-                <dd className="u-meta !text-[var(--paper)]">{project.status}</dd>
-              </div>
-            )}
-          </dl>
+          {/* Metadata ledger — only what's real. Rendered at all only when
+              there is something true to show, so an empty <dl> doesn't leave a
+              gap where invented fields would have gone. */}
+          {(project.role || project.status) && (
+            <dl className="u-fade mt-[calc(var(--vsq)*4)] flex flex-wrap gap-x-[calc(var(--vsq)*5)] gap-y-[calc(var(--vsq)*1.5)]">
+              {project.role && (
+                <div>
+                  <dt className="u-meta">Role</dt>
+                  <dd className="u-meta !text-[var(--paper)]">{project.role}</dd>
+                </div>
+              )}
+              {project.status && (
+                <div>
+                  <dt className="u-meta">Status</dt>
+                  <dd className="u-meta !text-[var(--paper)]">{project.status}</dd>
+                </div>
+              )}
+            </dl>
+          )}
 
           {/* Rendered only when a real link exists. */}
           {project.href && (
