@@ -33,10 +33,10 @@ export function Plate({
   feather?: boolean;
 }) {
   return (
-    // eslint-disable-next-line @next/next/no-img-element -- next/image re-encodes
-    // and resamples, which averages the 1-bit black/paper pixels into greys and
-    // destroys the dither. These are already 10-50KB lossless webp; there is no
-    // optimisation left to win, only texture to lose.
+    /* next/image re-encodes and resamples, which averages the 1-bit black/paper
+       pixels into greys and destroys the dither. These are already 10-50KB
+       lossless webp: no optimisation left to win, only texture to lose. */
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       src={src}
       alt={alt}

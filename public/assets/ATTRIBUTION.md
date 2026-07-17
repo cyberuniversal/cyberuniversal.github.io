@@ -47,9 +47,15 @@ the black drops out to the page. None of these reads as an unedited museum image
 
 ### Where used
 
-`map-arabia` → Shepherd-AI · `courtyard` → Halaqaat · `manuscript` → Youth Ink
-Network · `geometry` → BiQiyas · `medical-ms` → Glucose Guardian ·
-`map-idrisi` → hero ground layer.
+One plate per venture, no repeats — reusing an image across two sections reads as
+an accident rather than a motif.
+
+`map-arabia` → Shepherd-AI · `manuscript` → ALBA7OOTH Research Lab (Arabic NLP) ·
+`courtyard` → Halaqaat · `geometry` → BiQiyas · `map-idrisi` → Youth Ink Network ·
+`medical-ms` → Glucose Guardian.
+
+The hero uses no plate: there are six sources for six ventures and none to spare,
+and it already carries its own drawn composition.
 
 ## Where the original SVG artwork lives
 

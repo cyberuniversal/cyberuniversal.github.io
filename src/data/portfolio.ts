@@ -1,208 +1,228 @@
 /**
  * Single source of truth for site content.
  *
- * ACCURACY RULE: every field here is stated in Mohammed's brief. Nothing is
- * inferred, embellished, or invented — no dates, metrics, tech stacks, links,
- * users, or partnerships. Fields the brief does not state are `null` and are
- * simply not rendered. See CONTENT-TODO.md for the list awaiting real values.
- *
- * Arabic is used only where the word is genuine and meaningful (real place
- * names, real project names). No decorative or generated Arabic.
+ * ACCURACY RULE: every fact here comes from Mohammed's résumé (Resume.pdf).
+ * Nothing is inferred or embellished. Figures ("~11,000 applicants", "13-drone
+ * simulated swarm", "~97%") are quoted as the résumé states them, hedges
+ * included. Optional fields are `null` and simply don't render.
  */
-
-export type Project = {
-  id: string;
-  number: string;
-  name: string;
-  /** Genuine Arabic name. null where no established Arabic name exists. */
-  arabic: string | null;
-  /** One-line purpose — verbatim intent from the brief. */
-  purpose: string;
-  /** Stated role. null when the brief does not state one. */
-  role: string | null;
-  /** Year/status. null — the brief states none. Do not invent. */
-  status: string | null;
-  /** External link. null — the brief provides none. Not rendered when null. */
-  href: string | null;
-  /** The historical thread this project is placed against. */
-  lineage: string;
-  /**
-   * Baked dither plate from a public-domain archival source. Where a project has
-   * one, the photograph replaces the drawn SVG. Where it doesn't, the SVG stands
-   * — a real archival image beats a diagram, but a diagram beats a bad match.
-   * Sources and licences: public/assets/ATTRIBUTION.md
-   */
-  plate?: { src: string; alt: string };
-  flagship?: boolean;
-};
 
 export const profile = {
   name: "Mohammed Alnuwaiser",
+  title: "Student Researcher and Technical Founder in AI, NLP & Autonomous Systems",
   location: "Riyadh, Saudi Arabia",
-  locationArabic: "الرياض",
-  label: "AI RESEARCH / AUTONOMOUS SYSTEMS / RIYADH",
+  email: "momoalnuw@gmail.com",
+  label: "AI / NLP / AUTONOMOUS SYSTEMS — RIYADH",
+  /** Hero display line. Kept short enough to break cleanly at 13vw. */
+  headline: ["Intent", "into", "action."],
   statement:
-    "Building intelligent systems for the future, grounded in a civilization of knowledge.",
+    "Systems that turn ordinary language into action you can supervise — bounded, checked, and explainable after the fact.",
   secondary:
-    "AI researcher, technical founder, and student based in Riyadh.",
-  positioning:
-    "AI researcher, technical founder, and builder working on autonomous systems and mission-driven software.",
+    "Student researcher and technical founder working on AI, Arabic NLP, and autonomous systems.",
 } as const;
 
-export const projects: Project[] = [
+export type Work = {
+  id: string;
+  number: string;
+  /** Hermes-style kicker: the verb, not the noun. */
+  kicker: string;
+  name: string;
+  /** One-line claim. */
+  headline: string;
+  body: string;
+  role: string;
+  org: string | null;
+  place: string;
+  period: string;
+  /** Résumé-stated tech only. */
+  tech: string[];
+  plate?: { src: string; alt: string };
+  href: string | null; // TODO: no links in the résumé
+  flagship?: boolean;
+};
+
+export const work: Work[] = [
   {
     id: "shepherd-ai",
     number: "01",
+    kicker: "Command",
     name: "Shepherd-AI",
-    arabic: null, // No established Arabic name — not invented.
-    purpose:
-      "Human-in-the-loop autonomy orchestration and natural-language mission planning for drone teams.",
-    role: null, // TODO: brief states Research Fellow at YRI for the research, not a project role.
-    status: null,
-    href: null,
-    lineage:
-      "Navigation, command, and coordination across distance — the problem of moving intent safely between cities, and the routes that carried it.",
+    headline: "Natural language, bounded autonomy",
+    body: "An offline-first, human-supervised command layer that lets operators coordinate autonomous drone swarms through natural-language mission requests. It translates operator intent into bounded missions, deterministic target resolution and task allocation, explicit safety checks, human confirmation, and constrained dispatch for high-trust environments.",
+    role: "Research Fellow",
+    org: "YRI Fellowship",
+    place: "Remote",
+    period: "2026 — Present",
+    tech: ["MAVSDK/MAVLink", "Python"],
     plate: {
       src: "/img/map-arabia.webp",
-      alt: "Rigobert Bonne's 1771 map of Arabia, processed to a one-bit line-screen dither.",
+      alt: "Rigobert Bonne's 1771 map of Arabia, rendered as a one-bit line-screen dither.",
     },
+    href: null,
     flagship: true,
   },
   {
-    id: "halaqaat",
+    id: "alba7ooth",
     number: "02",
-    name: "Halaqaat",
-    arabic: "حلقات", // Genuine: "circles" — the study circles the project is named for.
-    purpose:
-      "A platform for discovering Islamic lessons, scholars, and gatherings.",
-    role: null,
-    status: null,
-    href: null,
-    lineage:
-      "Knowledge transmitted in circles — the madrasa courtyard, the study hall, and the unbroken chain between teacher and student.",
-    plate: {
-      src: "/img/courtyard.webp",
-      alt: "Courtyard of the Islam Khodja madrasa, Khiva, rendered as a one-bit line-screen dither.",
-    },
-  },
-  {
-    id: "youth-ink-network",
-    number: "03",
-    name: "Youth Ink Network",
-    arabic: null,
-    purpose: "A student research and publishing network.",
-    role: "Co-Founder and CTO", // Stated explicitly in the brief.
-    status: null,
-    href: null,
-    lineage:
-      "The written tradition — ink, parchment, marginalia, and the labour of copying and correcting a text so it survives.",
+    kicker: "Research",
+    name: "ALBA7OOTH Research Lab",
+    headline: "A student-led lab for Arabic NLP",
+    body: "Founded a student-led AI and Arabic NLP research lab. I lead an Arabic grammatical error correction project spanning literature review, dataset planning, experimentation, evaluation, and paper development.",
+    role: "Founder & Research Lead",
+    org: null,
+    place: "Riyadh, Saudi Arabia",
+    period: "2026 — Present",
+    tech: ["PyTorch", "Hugging Face Transformers", "LaTeX"],
     plate: {
       src: "/img/manuscript.webp",
       alt: "A page of an Arabic-script manuscript, rendered as a one-bit line-screen dither.",
     },
+    href: null,
+  },
+  {
+    id: "halaqaat",
+    number: "03",
+    kicker: "Discover",
+    name: "Halaqaat",
+    headline: "Learning you can actually find",
+    body: "A bilingual platform for discovering trusted Islamic lessons and gatherings beyond fragmented word-of-mouth networks. I'm building scholar verification, moderated publishing, search, filters, maps, and location-based discovery, with the goal of expanding from Saudi Arabia to Islamic communities worldwide.",
+    role: "Founder",
+    org: null,
+    place: "Riyadh, Saudi Arabia",
+    period: "2026 — Present",
+    tech: [],
+    plate: {
+      src: "/img/courtyard.webp",
+      alt: "The courtyard of the Islam Khodja madrasa, Khiva, rendered as a one-bit line-screen dither.",
+    },
+    href: null,
   },
   {
     id: "biqiyas",
     number: "04",
+    kicker: "Practice",
     name: "BiQiyas",
-    arabic: "بقياس", // Genuine: from qiyās, "measure".
-    purpose: "A free question-bank platform for the Saudi GAT/Qudurat.",
-    role: null,
-    status: null,
-    href: null,
-    lineage:
-      "Measure and method — algebraic notation, geometric construction, and the systematic exercise as a way of learning.",
+    headline: "A question bank built to scale",
+    body: "Building toward the world's largest question bank for Saudi aptitude tests, beginning with the English Saudi GAT and later expanding to Qudurat and Tahsili. I lead product architecture for targeted practice, answer review, progress analytics, and a question taxonomy organised by exam, topic, skill, and difficulty.",
+    role: "Co-Founder & CTO",
+    org: null,
+    place: "Riyadh, Saudi Arabia",
+    period: "2026 — Present",
+    tech: [],
     plate: {
       src: "/img/geometry.webp",
       alt: "Zellij tilework at Place El-Hedine, Meknes, rendered as a one-bit line-screen dither.",
     },
+    href: null,
+  },
+  {
+    id: "youth-ink-network",
+    number: "05",
+    kicker: "Publish",
+    name: "Youth Ink Network",
+    headline: "Student work, in the open",
+    body: "A youth-led nonprofit academic platform that helps students develop and publish original research, articles, essays, and conference-related work across disciplines. I designed and built the public site — submission pathways, publication tracks, collaboration opportunities, learning programs — and lead technical direction, architecture, deployment, and maintenance.",
+    role: "Co-Founder & CTO",
+    org: null,
+    place: "Riyadh, Saudi Arabia",
+    period: "2026 — Present",
+    tech: [],
+    plate: {
+      src: "/img/map-idrisi.webp",
+      alt: "Al-Idrisi's world map, rendered as a one-bit line-screen dither.",
+    },
+    href: null,
   },
   {
     id: "glucose-guardian",
-    number: "05",
+    number: "06",
+    kicker: "Escalate",
     name: "Glucose Guardian",
-    arabic: null,
-    purpose: "A software system for escalating dangerous glucose events.",
-    role: null,
-    status: null,
-    href: null,
-    lineage:
-      "The bimaristan and the medical manuscript — observation recorded carefully enough to act on.",
+    headline: "No critical event goes unnoticed",
+    body: "A glucose emergency application with timed escalation, critical notifications, configurable contacts, SMS alerts, automated calls, cancellation controls, and persistent event logging.",
+    role: "Builder",
+    org: null,
+    place: "Riyadh, Saudi Arabia",
+    period: "2026",
+    tech: ["React Native", "Expo", "Supabase", "Twilio"],
     plate: {
       src: "/img/medical-ms.webp",
       alt: "A page from a Persian ophthalmological manuscript, rendered as a one-bit line-screen dither.",
     },
-  },
-];
-
-export type ResearchEntry = {
-  code: string;
-  title: string;
-  body: string;
-  meta: string | null;
-  href: string | null;
-};
-
-export const research: ResearchEntry[] = [
-  {
-    code: "R–01",
-    title: "Shepherd-AI",
-    body: "Human-in-the-loop autonomy orchestration and natural-language mission planning for drone teams.",
-    meta: null, // TODO: no paper, venue, or date stated in the brief.
-    href: null,
-  },
-  {
-    code: "R–02",
-    title: "YRI Research Fellowship",
-    body: "Research Fellow, conducting Shepherd-AI research under one-on-one PhD mentorship.",
-    meta: null,
     href: null,
   },
 ];
 
-export type LedgerEntry = {
-  index: string;
-  title: string;
-  org: string | null;
-  place: string | null;
-  period: string | null;
-};
+/** The one honour on the résumé, with its stated figures. */
+export const honour = {
+  title: "2nd Place — Defensethon Hackathon",
+  track: "Programming Path",
+  project: "Shepherd-AI",
+  year: "2026",
+  detail:
+    "Advanced from approximately 11,000 applicants to roughly 350 finalists with a mission-planning system demonstrated on a 13-drone simulated swarm.",
+  figures: [
+    { value: "~11,000", label: "Applicants" },
+    { value: "~350", label: "Finalists" },
+    { value: "13", label: "Drone simulated swarm" },
+    { value: "2nd", label: "Programming path" },
+  ],
+} as const;
 
-/** Only entries the brief states. No invented dates. */
-export const ledger: LedgerEntry[] = [
+export const education = {
+  school: "Secondary School",
+  place: "Riyadh, Saudi Arabia",
+  detail: "Grade 11 · Overall average approximately 97%",
+  expected: "Expected graduation 2027",
+  period: "2024 — Present",
+} as const;
+
+/** Verbatim groupings from the résumé's Technical Skills section. */
+export const skills: { group: string; items: string[] }[] = [
   {
-    index: "01",
-    title: "Research Fellow",
-    org: "YRI",
-    place: null,
-    period: null, // TODO: no dates stated.
+    group: "Languages",
+    items: ["Python", "C", "JavaScript", "TypeScript", "SQL", "HTML/CSS"],
   },
   {
-    index: "02",
-    title: "Co-Founder and CTO",
-    org: "Youth Ink Network",
-    place: null,
-    period: null,
+    group: "Frameworks & Tools",
+    items: [
+      "PyTorch",
+      "Hugging Face Transformers",
+      "scikit-learn",
+      "pandas",
+      "NumPy",
+      "React Native",
+      "Expo",
+      "Supabase",
+      "Git/GitHub",
+      "REST APIs",
+      "Twilio",
+      "MAVSDK/MAVLink",
+      "LaTeX",
+    ],
   },
   {
-    index: "03",
-    title: "Second Place — Programming Path",
-    org: "DefenseThon",
-    place: null,
-    period: null,
+    group: "Research",
+    items: [
+      "Literature review",
+      "Experiment design",
+      "Dataset planning",
+      "Model evaluation",
+      "Technical writing",
+      "AI/ML",
+      "Arabic NLP",
+      "Autonomous systems",
+    ],
+  },
+  {
+    group: "Spoken",
+    items: ["English (fluent)", "Arabic (proficient)"],
   },
 ];
 
-/** Archive interstitials. Arabic names are standard and verified. */
-export const archives = [
-  { code: "ARCHIVE 01", title: "Córdoba", arabic: "قرطبة" },
-  { code: "ARCHIVE 02", title: "Baghdad", arabic: "بغداد" },
-  { code: "ARCHIVE 03", title: "Damascus", arabic: "دمشق" },
-] as const;
-
-/** TODO: no links are stated in the brief. Nothing is rendered until real. */
 export const contact = {
-  email: null as string | null,
+  email: profile.email,
+  /** TODO: not on the résumé. Add and they render automatically. */
   github: null as string | null,
   linkedin: null as string | null,
   resume: null as string | null,

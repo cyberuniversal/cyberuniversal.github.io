@@ -1,7 +1,11 @@
 # Mohammed Alnuwaiser — portfolio
 
-A single-scroll editorial portfolio. Dark teal, monumental serif, procedural
-grain, and original SVG artwork rooted in Islamic intellectual history.
+A single-scroll editorial portfolio: dark teal, monumental serif, procedural
+grain, and 1-bit dithered archival plates. Referenced closely on
+[Hermes Agent](https://hermes-agent.nousresearch.com/) for structure, typography
+and image treatment; the palette is deliberately ours.
+
+All content is résumé-accurate — see [`CONTENT-TODO.md`](./CONTENT-TODO.md).
 
 Next.js 16 (App Router) · React 19 · TypeScript · Tailwind 4.
 
@@ -35,17 +39,35 @@ src/
     page.tsx          section composition
     globals.css       design tokens + primitives
   components/
+    Nav, Hero         header + claim
+    WorkSection.tsx   one venture; ×6, numbered
+    Honour.tsx        Defensethon band
+    Skills.tsx        the bright paper inversion panel
+    About, Contact
+    Plate.tsx         a baked dither plate (read its header before touching)
     Grain.tsx         procedural feTurbulence film grain
-    Nav, Hero, Statement, ProjectSection, ArchiveBreak,
-    Research, Ledger, About, Contact
     Reveal.tsx        IntersectionObserver scroll reveal
     art/
-      HeroArt.tsx     hero city composition
-      ProjectArt.tsx  five project artworks
-  data/portfolio.ts   all content
+      HeroArt.tsx     drawn city composition
+      ShepherdArt.tsx mission diagram, drawn over the flagship plate
+  data/portfolio.ts   ALL content — nothing hardcoded in components
   lib/svg.ts          coordinate quantisation (see below)
-scripts/              verification harness
+scripts/              asset pipeline + verification harness
 ```
+
+## Asset pipeline
+
+Archival plates are **baked, not filtered** — the reference applies `filter: none`
+to every image and ships the dither inside the asset. Same here.
+
+```bash
+node scripts/fetch-assets.mjs   # PD/CC0 from Wikimedia, licence verified via API
+node scripts/dither.mjs         # -> public/img/*.webp  (~217KB total, 7 plates)
+```
+
+`dither.mjs` does: resize → grayscale → normalise → CLAHE → **invert** → gamma →
+line screen + Bayer 4×4 → duotone → lossless webp. Tuning is per-image at the
+bottom of the file.
 
 ## Design tokens
 
@@ -68,6 +90,12 @@ causes hydration mismatches. Use `n()` / `pt()` / `poly()` from
 **2. Never use negative z-index for artwork.** `html` and `body` carry an opaque
 background, so a `-z-10` child paints *behind* it and vanishes. Artwork sits at
 `z-0` with content at `relative z-10`.
+
+**3. Plates must be pure black + `--paper`, and never resampled.** They composite
+with `mix-blend-mode: screen`; `screen(0, bg) == bg`, so black drops out with no
+seam. A dark-teal shadow instead of black would lighten each image's rectangle and
+expose its edges. And `next/image` re-encodes, which averages the 1-bit pixels
+into grey — that's why `Plate` uses a plain `<img>`.
 
 ## Verification
 

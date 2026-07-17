@@ -38,6 +38,11 @@
      scaling — was the bug. These keep the type monumental (11.5vw still fills
      the screen edge-to-edge on mobile) while fitting inside --edge gutters. */
   --fs-display: clamp(2.6rem, 13vw, 13rem);
+  /* Hero runs three lines. Narrow screens are tall relative to their width, so
+     they can carry the full 13vw; wide ones can't — at 1440 that's ~187px a line
+     and the hero blows past 92svh, sliding the label under the fixed nav. Same
+     voice, sized to the line count at each end. Overridden at md below. */
+  --fs-hero: clamp(2.6rem, 13vw, 10rem);
   --fs-title: clamp(2rem, 6.2vw, 6.5rem);
   --fs-statement: clamp(1.5rem, 4.2vw, 3.75rem);
   --lh-display: 0.88; /* measured from the reference */
@@ -54,6 +59,12 @@
   --ease-cine: cubic-bezier(0.22, 1, 0.36, 1);
   --dur-slow: 1400ms;
   --dur-med: 900ms;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --fs-hero: clamp(2.6rem, 10.5vw, 10rem);
+  }
 }
 
 @theme inline {
