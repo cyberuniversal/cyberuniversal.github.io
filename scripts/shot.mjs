@@ -50,7 +50,10 @@ for (const vp of VIEWPORTS) {
   const clipped = await page.evaluate(() => {
     const out = [];
     const vw = document.documentElement.clientWidth;
-    document.querySelectorAll("h1, h2, h3, p, a, li, dd, dt").forEach((el) => {
+    // `span` matters: the reveal masks are spans with overflow:hidden, so an
+    // oversized headline gets clipped by one of those rather than by the page —
+    // invisible to a selector that only looks at block elements.
+    document.querySelectorAll("h1, h2, h3, p, a, li, dd, dt, span, code").forEach((el) => {
       const r = el.getBoundingClientRect();
       if (r.width === 0) return;
       // Skip visually-hidden helpers (sr-only skip link is a 1px clip by design)

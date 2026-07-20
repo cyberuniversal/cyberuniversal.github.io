@@ -1,257 +1,59 @@
 @import "tailwindcss";
 
-/* ============================================================
-   DESIGN TOKENS
-   Palette: dark teal base, warm ivory foreground.
-   Deliberately NOT the reference's electric blue — see design-reference.md §2.
-   ============================================================ */
-
+/* bwu.ai aesthetic: white page, mono type, blue links, light default + dark toggle.
+   Palette measured from the reference. */
 :root {
-  /* Colour ------------------------------------------------- */
-  --ink: #02110f;
-  --ink-soft: #071c18;
-  --teal-black: #061b18;
-  --surface: #0a211d;
-  --oxidized-teal: #17433b;
-  /* Lightened from the brief's suggested #58766f, which measures 3.89:1 against
-     --ink — below the 4.5:1 WCAG AA floor for small text, and every mono label,
-     annotation and Arabic accent on the site uses it. #6b8a82 measures 5.1:1
-     and keeps the same muted archival cast. Verified by scripts/contrast.mjs. */
-  --muted-teal: #6b8a82;
-  --paper: #e9e1cf;
-  --paper-muted: #aaa99f;
-  --line: rgba(233, 225, 207, 0.18);
-  --line-strong: rgba(233, 225, 207, 0.38);
-
-  /* Spacing ------------------------------------------------
-     --vsq is the reference's viewport-square unit: rhythm scales
-     continuously with the screen instead of stepping at breakpoints. */
-  --vsq: calc(0.5vw + 0.5vh);
-  --edge: clamp(1.25rem, 4vw, 4.5rem);
-  --section-y: clamp(6rem, 14vh, 12rem);
-  --measure: 62ch;
-
-  /* Typography --------------------------------------------- */
-  /* Floors are set by what actually fits at 390px, not by the brief's suggested
-     clamp(5rem, 13vw, 13rem): at 390px the 13vw term is ~51px but the 5rem floor
-     forces 80px, which clips "ALNUWAISER" off the viewport. The floor — not the
-     scaling — was the bug. These keep the type monumental (11.5vw still fills
-     the screen edge-to-edge on mobile) while fitting inside --edge gutters. */
-  --fs-display: clamp(2.6rem, 13vw, 13rem);
-  /* Hero runs three lines. Narrow screens are tall relative to their width, so
-     they can carry the full 13vw; wide ones can't — at 1440 that's ~187px a line
-     and the hero blows past 92svh, sliding the label under the fixed nav. Same
-     voice, sized to the line count at each end. Overridden at md below. */
-  --fs-hero: clamp(2.6rem, 13vw, 10rem);
-  --fs-title: clamp(2rem, 6.2vw, 6.5rem);
-  --fs-statement: clamp(1.5rem, 4.2vw, 3.75rem);
-  --lh-display: 0.88; /* measured from the reference */
-  --lh-title: 0.94;
-  --tracking-display: 0.02em;
-  --fs-meta: clamp(0.625rem, 0.72vw, 0.75rem);
-  --tracking-meta: 0.18em;
-
-  /* Texture ------------------------------------------------- */
-  --grain-opacity: 0.16;
-  --grain-blend: soft-light;
-
-  /* Motion -------------------------------------------------- */
-  --ease-cine: cubic-bezier(0.22, 1, 0.36, 1);
-  --dur-slow: 1400ms;
-  --dur-med: 900ms;
+  --bg: #ffffff;
+  --fg: #000000;
+  --muted: #6b7280;
+  --link: #007bff;
+  --line: rgba(0, 0, 0, 0.12);
 }
 
-@media (min-width: 768px) {
-  :root {
-    --fs-hero: clamp(2.6rem, 10.5vw, 10rem);
-  }
+:root[data-theme="dark"] {
+  --bg: #000000;
+  --fg: #ffffff;
+  --muted: #9aa0a6;
+  --link: #d9deff;
+  --line: rgba(255, 255, 255, 0.16);
 }
-
-@theme inline {
-  --color-ink: var(--ink);
-  --color-ink-soft: var(--ink-soft);
-  --color-teal-black: var(--teal-black);
-  --color-surface: var(--surface);
-  --color-oxidized: var(--oxidized-teal);
-  --color-muted-teal: var(--muted-teal);
-  --color-paper: var(--paper);
-  --color-paper-muted: var(--paper-muted);
-  --font-display: var(--font-bodoni), "Times New Roman", serif;
-  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-plex-mono), "Courier New", monospace;
-  --font-arabic: var(--font-amiri), serif;
-}
-
-/* ============================================================
-   BASE
-   ============================================================ */
 
 html {
-  background: var(--ink);
-  scroll-behavior: smooth;
-  /* Prevent horizontal overflow at every viewport (brief: no h-scroll on mobile) */
-  overflow-x: hidden;
+  background: var(--bg);
 }
 
 body {
-  background: var(--ink);
-  color: var(--paper);
-  font-family: var(--font-sans);
-  font-size: clamp(0.9375rem, 1.05vw, 1.0625rem);
-  line-height: 1.62;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: 16px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 
-::selection {
-  background: var(--oxidized-teal);
-  color: var(--paper);
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
 }
 
-/* Focus: visible, high-contrast, never removed (brief: a11y) */
 :focus-visible {
-  outline: 2px solid var(--paper);
-  outline-offset: 3px;
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
 }
 
-/* ============================================================
-   TYPOGRAPHY PRIMITIVES
-   ============================================================ */
-
-.u-display {
-  font-family: var(--font-display);
-  font-weight: 300; /* measured from the reference */
-  text-transform: uppercase;
-  line-height: var(--lh-display);
-  letter-spacing: var(--tracking-display);
-  /* Optical trim so huge type aligns to the grid, not its metrics */
-  margin-block: -0.08em;
-}
-
-.u-title {
-  font-family: var(--font-display);
-  font-weight: 300;
-  text-transform: uppercase;
-  font-size: var(--fs-title);
-  line-height: var(--lh-title);
-  letter-spacing: 0.015em;
-}
-
-.u-meta {
-  font-family: var(--font-mono);
-  font-size: var(--fs-meta);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-meta);
-  color: var(--muted-teal);
-}
-
-/* Annotation: mono voice, but readable prose rather than a metadata label.
-   A separate class because these custom classes are declared after Tailwind's
-   utilities, so `normal-case` loses the specificity tie against .u-meta. */
-.u-note {
-  font-family: var(--font-mono);
-  font-size: clamp(0.75rem, 0.85vw, 0.8125rem);
-  line-height: 1.75;
-  letter-spacing: 0.01em;
-  color: var(--muted-teal);
-  text-transform: none;
-}
-
-.u-measure {
-  max-width: var(--measure);
-}
-
-.u-arabic {
-  font-family: var(--font-arabic);
-  direction: rtl;
-  unicode-bidi: isolate;
-  line-height: 1.9;
-}
-
-/* Hairline rules — structural, never decorative */
-.u-rule {
-  height: 1px;
-  background: var(--line);
+/* A button that reads as a bwu-style link. */
+.link-button {
+  color: var(--link);
+  background: none;
   border: 0;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
 }
-
-/* ============================================================
-   MOTION
-   Headings enter from behind an overflow-hidden mask.
-   ============================================================ */
-
-.u-mask {
-  overflow: hidden;
-  display: block;
-}
-
-.u-rise {
-  transform: translateY(105%);
-  transition: transform var(--dur-slow) var(--ease-cine);
-  will-change: transform;
-}
-
-[data-inview="true"] .u-rise {
-  transform: translateY(0);
-}
-
-.u-fade {
-  opacity: 0;
-  transform: translateY(1.25rem);
-  transition:
-    opacity var(--dur-med) var(--ease-cine),
-    transform var(--dur-med) var(--ease-cine);
-}
-
-[data-inview="true"] .u-fade {
-  opacity: 1;
-  transform: none;
-}
-
-/* Thin rules draw themselves into place */
-.u-draw {
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--dur-slow) var(--ease-cine);
-}
-
-[data-inview="true"] .u-draw {
-  transform: scaleX(1);
-}
-
-/* Stagger children without per-element JS */
-[data-stagger] > * {
-  transition-delay: calc(var(--i, 0) * 90ms);
-}
-
-/* ============================================================
-   REDUCED MOTION
-   Everything resolves to its final state instantly.
-   ============================================================ */
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
-  }
-
-  .u-rise,
-  .u-fade,
-  .u-draw {
-    transform: none !important;
-    opacity: 1 !important;
-  }
-
-  /* Grain must not drift */
-  .grain-layer {
-    animation: none !important;
-  }
+.link-button:hover {
+  text-decoration: underline;
 }
