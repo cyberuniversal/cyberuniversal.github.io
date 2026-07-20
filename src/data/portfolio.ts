@@ -1,28 +1,27 @@
 /**
- * Content from Resume.pdf, structured to match bwu.ai's DOM exactly:
- * header → name → bio → "X here" links → <hr> → roles list → <hr> →
- * repos/social → email → <hr> → languages → toggle → copyright.
- *
- * `href: null` → rendered as a pending link (styled, not yet clickable) rather
- * than an invented URL. See CONTENT-TODO.md.
+ * Content from Resume.pdf, structured to match bwu.ai's DOM.
+ * Research (Shepherd-AI, Musahhih) lives on its own /research page, reached via
+ * the "Research here" link — mirroring the reference's sub-pages.
  */
 
+const GITHUB = "https://github.com/cyberuniversal";
+const LINKEDIN = "https://www.linkedin.com/in/mohammedwn/";
+
 export const profile = {
-  // Header path: "<name>/README.txt", name linking to GitHub like the reference.
   pathName: "mohammed-alnuwaiser",
   pathExt: "/README.txt",
-  githubUrl: null as string | null, // TODO
-  linkedinUrl: null as string | null, // TODO
+  githubUrl: GITHUB,
+  linkedinUrl: LINKEDIN,
   name: "Mohammed Alnuwaiser",
   bio: "I build autonomous systems and research how AI explains itself. Interested in autonomous UAVs, robotics, and Arabic NLP.",
   email: "momoalnuw@gmail.com",
   languages: "العربية · English",
 } as const;
 
-/** "X here" links, where "here" is the hyperlink. */
+/** "X here" links. Projects → GitHub; Research → the /research page. */
 export const hereLinks: { label: string; href: string | null }[] = [
-  { label: "Projects", href: null }, // TODO -> GitHub
-  { label: "Research", href: null }, // TODO
+  { label: "Projects", href: GITHUB },
+  { label: "Research", href: "/research" },
 ];
 
 export type Role = { name: string; org: string; bold?: boolean };
@@ -31,7 +30,6 @@ export type Role = { name: string; org: string; bold?: boolean };
 export const roles: Role[] = [
   { name: "Grade 11, expected 2027", org: "Secondary School, Riyadh", bold: true },
   { name: "Gifted Student (MMCAT)", org: "Mawhiba", bold: true },
-  // (blank line in the reference between education and experience)
   { name: "AI Explainability Research", org: "UC Santa Cruz — Prof. Leilani H. Gilpin" },
   { name: "Founder & Research Lead", org: "ALBA7OOTH Research Lab" },
   { name: "Co-Founder & CTO", org: "BiQiyas" },
@@ -40,19 +38,33 @@ export const roles: Role[] = [
   { name: "2nd Place, Programming Path", org: "Defensethon Hackathon" },
 ];
 
-/** Index in `roles` after which a blank line separates education from experience. */
+/** Blank line between education and experience. */
 export const rolesSplitAfter = 2;
 
 export type Repo = { name: string; href: string | null; inProgress?: boolean };
 
-/** Rendered "name@ github", matching the reference's "787-10@ github". */
+/** Main-page repos, "name@ github". Shepherd-AI + Musahhih moved to /research. */
 export const repos: Repo[] = [
-  { name: "Shepherd-AI", href: null, inProgress: true },
-  { name: "Musahhih", href: null, inProgress: true },
-  { name: "Glucose Guardian", href: null },
+  { name: "Glucose Guardian", href: GITHUB },
 ];
 
-/** Rendered "name@ platform", the platform being the link. */
+/** Rendered "name@ platform". */
 export const socials: { name: string; platform: string; href: string | null }[] = [
-  { name: profile.name, platform: "linkedin", href: profile.linkedinUrl },
+  { name: profile.name, platform: "linkedin", href: LINKEDIN },
+];
+
+export type Research = { name: string; href: string | null; note: string };
+
+/** The /research page. Richer notes than the home list — it's the detail page. */
+export const research: Research[] = [
+  {
+    name: "Shepherd-AI",
+    href: "https://github.com/cyberuniversal/shepherd-ai",
+    note: "A Python simulation prototype for natural-language multi-drone mission planning — translating typed or spoken commands into structured intents, grounded map references, and initial mission plans. Command-parsing baselines, a DistilBERT span extractor, Whisper speech-input scaffolding, deterministic grounding, operator clarification, and an initial planner; validated 22/22 human-written commands on the custom simulation map.",
+  },
+  {
+    name: "Musahhih",
+    href: "https://github.com/ALBA7OOTH-Research-Lab/Musahhih",
+    note: "Modern Standard Arabic grammatical error correction with open-weight models — comparing untouched and prompt-only baselines against LoRA/QLoRA fine-tuning on natural, synthetic, and mixed corpora. Improved exact-match correction on held-out Nahw-Passage from 16.83% to 28.38% (86/511 to 145/511) with the selected QLoRA checkpoint.",
+  },
 ];
