@@ -30,18 +30,28 @@ export const experience: Item[] = [
   { what: "Grade 11, expected 2027", where: "Secondary School, Riyadh", href: null },
 ];
 
-export type Project = { name: string; note: string; href: string | null };
+export type Project = {
+  name: string;
+  note: string;
+  href: string | null;
+  /** Research with a paper in progress — rendered with italic emphasis, the way
+   *  the reference italicises (<em>) its emphasised line. */
+  inProgress?: boolean;
+};
 
+/** Research first (the in-progress papers), then shipped projects. */
 export const projects: Project[] = [
   {
     name: "Shepherd-AI",
-    note: "natural-language multi-drone mission planning — DistilBERT span extractor, Whisper speech input, deterministic grounding; 22/22 human commands validated. Paper in progress.",
+    note: "natural-language multi-drone mission planning — DistilBERT span extractor, Whisper speech input, deterministic grounding; 22/22 human commands validated.",
     href: null, // TODO: GitHub repo
+    inProgress: true,
   },
   {
     name: "Musahhih",
-    note: "Modern Standard Arabic grammatical error correction with open-weight models; QLoRA fine-tuning lifted exact-match from 16.83% to 28.38% on held-out Nahw-Passage. Paper in progress.",
+    note: "Modern Standard Arabic grammatical error correction with open-weight models; QLoRA fine-tuning lifted exact-match from 16.83% to 28.38% on held-out Nahw-Passage.",
     href: null, // TODO: GitHub repo
+    inProgress: true,
   },
   {
     name: "Glucose Guardian",

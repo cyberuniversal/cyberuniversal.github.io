@@ -52,7 +52,9 @@ export default function Home() {
         {profile.path}
       </header>
 
-      <p style={{ fontWeight: 700 }}>{profile.name}</p>
+      <p>
+        <strong>{profile.name}</strong>
+      </p>
       <p style={{ maxWidth: "62ch", marginTop: "0.75rem" }}>{profile.bio}</p>
 
       <Section>
@@ -61,15 +63,20 @@ export default function Home() {
         ))}
       </Section>
 
-      <Section label="Projects">
+      <Section label="Projects & Research">
         {projects.map((p) => (
           <p key={p.name} style={{ marginBottom: "0.75rem", maxWidth: "72ch" }}>
             {p.href ? (
               <a href={p.href} target="_blank" rel="noreferrer noopener">
-                {p.name}
+                <strong>{p.name}</strong>
               </a>
             ) : (
-              <span style={{ fontWeight: 700 }}>{p.name}</span>
+              <strong>{p.name}</strong>
+            )}
+            {/* Italic emphasis marks the in-progress research, matching the
+                reference's <em> treatment. */}
+            {p.inProgress && (
+              <em style={{ color: "var(--muted)" }}> — research in progress</em>
             )}
             <span style={{ color: "var(--muted)" }}> — {p.note}</span>
           </p>

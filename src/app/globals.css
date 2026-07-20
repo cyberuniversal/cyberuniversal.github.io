@@ -25,11 +25,23 @@ html {
 body {
   background: var(--bg);
   color: var(--fg);
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
-    "Liberation Mono", "Courier New", monospace;
+  /* Loaded font first so Windows/Linux match the reference too; real SF Mono
+     wins on Apple via ui-monospace before the generic fallbacks. */
+  font-family: var(--font-mono), ui-monospace, "SF Mono", SFMono-Regular, Menlo,
+    Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.5; /* 24px / 16px — measured from the reference */
   -webkit-font-smoothing: antialiased;
+}
+
+/* The reference's emphasis: bold name (<strong>), italic for notes (<em>). */
+strong,
+b {
+  font-weight: 700;
+}
+em,
+i {
+  font-style: italic;
 }
 
 a {
