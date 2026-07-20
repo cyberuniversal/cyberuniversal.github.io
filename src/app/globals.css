@@ -69,3 +69,52 @@ a:hover {
 .link-button:hover {
   text-decoration: underline;
 }
+
+/* ---- layout, measured from the reference ---- */
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 15px;
+  text-align: left;
+}
+
+/* Reference: generic <p> has a 16px bottom margin; list rows have none, so the
+   roles stack tight. */
+p {
+  margin: 0 0 16px;
+}
+p.list {
+  margin: 0;
+}
+
+/* The alignment trick: role-name is a fixed 307px inline-block column, so every
+   "@ org" lines up. Collapses to auto on narrow screens so it doesn't overflow. */
+.role-name {
+  display: inline-block;
+  width: 307px;
+  max-width: 100%;
+  vertical-align: top;
+}
+@media (max-width: 640px) {
+  .role-name {
+    width: auto;
+    display: inline;
+  }
+}
+
+/* Partitions. */
+hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 16px 0;
+}
+
+/* A link whose URL isn't set yet: looks like a link, isn't yet clickable. */
+.link,
+.link-pending {
+  color: var(--link);
+}
+.link:hover {
+  text-decoration: underline;
+}

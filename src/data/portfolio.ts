@@ -1,71 +1,58 @@
 /**
- * All content, from Resume.pdf. Structured to mirror bwu.ai's README layout.
- * Nothing invented. `href: null` renders as plain text — real URLs weren't in
- * the résumé, so social/repo links wait for real values (see CONTENT-TODO.md).
+ * Content from Resume.pdf, structured to match bwu.ai's DOM exactly:
+ * header → name → bio → "X here" links → <hr> → roles list → <hr> →
+ * repos/social → email → <hr> → languages → toggle → copyright.
+ *
+ * `href: null` → rendered as a pending link (styled, not yet clickable) rather
+ * than an invented URL. See CONTENT-TODO.md.
  */
 
 export const profile = {
-  path: "~/mohammed-alnuwaiser/README.txt",
+  // Header path: "<name>/README.txt", name linking to GitHub like the reference.
+  pathName: "mohammed-alnuwaiser",
+  pathExt: "/README.txt",
+  githubUrl: null as string | null, // TODO
+  linkedinUrl: null as string | null, // TODO
   name: "Mohammed Alnuwaiser",
   bio: "I build autonomous systems and research how AI explains itself. Interested in autonomous UAVs, robotics, and Arabic NLP.",
-  location: "Riyadh, Saudi Arabia",
   email: "momoalnuw@gmail.com",
-  // Résumé: (966) 055 134 1765 → E.164 for the tel: link.
-  phone: "+966 55 134 1765",
-  phoneHref: "tel:+966551341765",
   languages: "العربية · English",
 } as const;
 
-export type Item = { what: string; where: string; href: string | null };
-
-/** "role@ place" rows, most significant first. */
-export const experience: Item[] = [
-  { what: "AI Explainability & Accountability", where: "UC Santa Cruz — Prof. Leilani H. Gilpin", href: null },
-  { what: "Founder & Research Lead", where: "ALBA7OOTH Research Lab", href: null },
-  { what: "Co-Founder & CTO", where: "BiQiyas", href: null },
-  { what: "Co-Founder & CTO", where: "Youth Ink Network", href: null },
-  { what: "Founder", where: "Halaqaat", href: null },
-  { what: "2nd Place, Programming Path", where: "Defensethon Hackathon", href: null },
-  { what: "Gifted Student (MMCAT)", where: "Mawhiba", href: null },
-  { what: "Grade 11, expected 2027", where: "Secondary School, Riyadh", href: null },
+/** "X here" links, where "here" is the hyperlink. */
+export const hereLinks: { label: string; href: string | null }[] = [
+  { label: "Projects", href: null }, // TODO -> GitHub
+  { label: "Research", href: null }, // TODO
 ];
 
-export type Project = {
-  name: string;
-  note: string;
-  href: string | null;
-  /** Research with a paper in progress — rendered with italic emphasis, the way
-   *  the reference italicises (<em>) its emphasised line. */
-  inProgress?: boolean;
-};
+export type Role = { name: string; org: string; bold?: boolean };
 
-/** Research first (the in-progress papers), then shipped projects. */
-export const projects: Project[] = [
-  {
-    name: "Shepherd-AI",
-    note: "natural-language multi-drone mission planning — DistilBERT span extractor, Whisper speech input, deterministic grounding; 22/22 human commands validated.",
-    href: null, // TODO: GitHub repo
-    inProgress: true,
-  },
-  {
-    name: "Musahhih",
-    note: "Modern Standard Arabic grammatical error correction with open-weight models; QLoRA fine-tuning lifted exact-match from 16.83% to 28.38% on held-out Nahw-Passage.",
-    href: null, // TODO: GitHub repo
-    inProgress: true,
-  },
-  {
-    name: "Glucose Guardian",
-    note: "glucose-emergency app with timed escalation, SMS and call alerts, and persistent logging. React Native, Expo, Supabase, Twilio.",
-    href: null,
-  },
+/** One line each: role-name (307px column) + "@ org". bold = education. */
+export const roles: Role[] = [
+  { name: "Grade 11, expected 2027", org: "Secondary School, Riyadh", bold: true },
+  { name: "Gifted Student (MMCAT)", org: "Mawhiba", bold: true },
+  // (blank line in the reference between education and experience)
+  { name: "AI Explainability Research", org: "UC Santa Cruz — Prof. Leilani H. Gilpin" },
+  { name: "Founder & Research Lead", org: "ALBA7OOTH Research Lab" },
+  { name: "Co-Founder & CTO", org: "BiQiyas" },
+  { name: "Co-Founder & CTO", org: "Youth Ink Network" },
+  { name: "Founder", org: "Halaqaat" },
+  { name: "2nd Place, Programming Path", org: "Defensethon Hackathon" },
 ];
 
-/** bwu's "Writings here / Projects here" social row. Only email + phone resolve. */
-export const links: Item[] = [
-  { what: "github", where: "", href: null }, // TODO
-  { what: "linkedin", where: "", href: null }, // TODO
+/** Index in `roles` after which a blank line separates education from experience. */
+export const rolesSplitAfter = 2;
+
+export type Repo = { name: string; href: string | null; inProgress?: boolean };
+
+/** Rendered "name@ github", matching the reference's "787-10@ github". */
+export const repos: Repo[] = [
+  { name: "Shepherd-AI", href: null, inProgress: true },
+  { name: "Musahhih", href: null, inProgress: true },
+  { name: "Glucose Guardian", href: null },
 ];
 
-/** README-appropriate one-liner. Verbatim from the résumé's skills. */
-export const stack =
-  "Python · TypeScript · C · SQL · PyTorch · scikit-learn · pandas · NumPy · React Native · Supabase · Git · LaTeX";
+/** Rendered "name@ platform", the platform being the link. */
+export const socials: { name: string; platform: string; href: string | null }[] = [
+  { name: profile.name, platform: "linkedin", href: profile.linkedinUrl },
+];

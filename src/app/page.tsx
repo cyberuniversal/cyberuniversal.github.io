@@ -1,132 +1,125 @@
 import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   profile,
-  experience,
-  projects,
-  links,
-  stack,
+  hereLinks,
+  roles,
+  rolesSplitAfter,
+  repos,
+  socials,
 } from "@/data/portfolio";
 
 /**
- * bwu.ai README layout: one left-aligned monospace column, blocks separated by
- * blank space. A row is a link only when it has a real href; otherwise plain
- * text (no invented URLs). Email and phone are the only resolving links today.
+ * Structure copied element-for-element from bwu.ai:
+ *   container → [name-link]/README.txt → name → bio → "X here" links → <hr>
+ *   → roles list (education bold, then experience) → <hr>
+ *   → repos "name@ github" + socials → email → <hr>
+ *   → languages · toggle · copyright
  */
 
 const year = new Date().getFullYear();
 
-/** "what@ where", where becoming a link only if href is present. */
-function Row({ what, where, href }: { what: string; where: string; href: string | null }) {
-  const label = where ? (
-    <>
-      {what}
-      <span style={{ color: "var(--muted)" }}>@ </span>
-      {href ? (
-        <a href={href} target="_blank" rel="noreferrer noopener">
-          {where}
-        </a>
-      ) : (
-        where
-      )}
-    </>
-  ) : href ? (
+/** Link if a URL exists; otherwise a styled placeholder (no invented URLs). */
+function L({ href, children }: { href: string | null; children: React.ReactNode }) {
+  return href ? (
     <a href={href} target="_blank" rel="noreferrer noopener">
-      {what}
+      {children}
     </a>
   ) : (
-    what
+    <span className="link-pending" title="link coming soon">
+      {children}
+    </span>
   );
-  return <p>{label}</p>;
 }
 
 export default function Home() {
   return (
-    <main
-      style={{
-        maxWidth: "1140px",
-        margin: "0 auto",
-        padding: "clamp(1.5rem, 5vw, 3.5rem) 15px",
-      }}
-    >
-      <header style={{ color: "var(--muted)", marginBottom: "2rem" }}>
-        {profile.path}
-      </header>
+    <div className="container">
+      <br />
+
+      <p>
+        <L href={profile.githubUrl}>{profile.pathName}</L>
+        {profile.pathExt}
+      </p>
+
+      <p></p>
 
       <p>
         <strong>{profile.name}</strong>
       </p>
-      <p style={{ maxWidth: "62ch", marginTop: "0.75rem" }}>{profile.bio}</p>
+      <p>{profile.bio}</p>
 
-      <Section>
-        {experience.map((e) => (
-          <Row key={e.what + e.where} {...e} />
-        ))}
-      </Section>
+      {/* "X here" links */}
+      {hereLinks.map((l) => (
+        <p key={l.label}>
+          <span>{l.label} </span>
+          <L href={l.href}>here</L>
+        </p>
+      ))}
 
-      <Section label="Projects & Research">
-        {projects.map((p) => (
-          <p key={p.name} style={{ marginBottom: "0.75rem", maxWidth: "72ch" }}>
-            {p.href ? (
-              <a href={p.href} target="_blank" rel="noreferrer noopener">
-                <strong>{p.name}</strong>
-              </a>
-            ) : (
-              <strong>{p.name}</strong>
-            )}
-            {/* Italic emphasis marks the in-progress research, matching the
-                reference's <em> treatment. */}
-            {p.inProgress && (
-              <em style={{ color: "var(--muted)" }}> — research in progress</em>
-            )}
-            <span style={{ color: "var(--muted)" }}> — {p.note}</span>
+      <hr />
+
+      {/* Roles: education (bold) then experience, split by a blank line. */}
+      <div className="list">
+        {roles.map((r, i) => {
+          const Name = r.bold ? "strong" : "span";
+          return (
+            <div key={r.name + r.org}>
+              <p className="list">
+                <Name className="role-name">{r.name}</Name>
+                <span>@ {r.org}</span>
+              </p>
+              {i === rolesSplitAfter - 1 && <br />}
+            </div>
+          );
+        })}
+
+        <hr />
+
+        {/* Repos as "name@ github"; in-progress research gets italic emphasis. */}
+        {repos.map((p) => (
+          <p key={p.name} className="list">
+            <span className="role-name">
+              {p.name}
+              {p.inProgress && <em> (in progress)</em>}
+            </span>
+            <span>
+              @ <L href={p.href}>github</L>
+            </span>
           </p>
         ))}
-      </Section>
-
-      <Section>
-        <p style={{ color: "var(--muted)", maxWidth: "72ch" }}>{stack}</p>
-      </Section>
-
-      <Section>
-        {links.map((l) => (
-          <Row key={l.what} {...l} />
+        {socials.map((s) => (
+          <p key={s.platform} className="list">
+            <span className="role-name">{s.name}</span>
+            <span>
+              @ <L href={s.href}>{s.platform}</L>
+            </span>
+          </p>
         ))}
-        <p>
-          <a href={`mailto:${profile.email}`}>{obfuscate(profile.email)}</a>
-        </p>
-        <p>
-          <a href={profile.phoneHref}>{profile.phone}</a>
-        </p>
-        <p>{profile.location}</p>
-      </Section>
 
-      <Section>
+        <br />
+
+        {/* Plain text, like the reference — obfuscated against scrapers. */}
+        <p>{obfuscate(profile.email)}</p>
+
+        <hr />
+
         <p>Languages I speak: {profile.languages}</p>
-        <p style={{ marginTop: "1rem" }}>
+        <p>
           <ThemeToggle />
         </p>
-      </Section>
 
-      <footer style={{ color: "var(--muted)", marginTop: "2.5rem" }}>
-        © Mohammed Alnuwaiser — {year}
-      </footer>
-    </main>
+        <br />
+        <br />
+
+        <p>
+          © {profile.name} — {year}
+        </p>
+      </div>
+    </div>
   );
 }
 
-function Section({ label, children }: { label?: string; children: React.ReactNode }) {
-  return (
-    <section style={{ marginTop: "2rem" }}>
-      {label && (
-        <p style={{ color: "var(--muted)", marginBottom: "0.5rem" }}>{label}</p>
-      )}
-      {children}
-    </section>
-  );
-}
-
-/** bwu writes "brian [at] bwu [dot] ai" — same courtesy against scrapers. The
- *  href stays a real mailto; only the visible text is obfuscated. */
+/** "momoalnuw [at] gmail [dot] com" — matches the reference's obfuscation. */
 function obfuscate(email: string) {
   return email.replace("@", " [at] ").replace(/\.(?=[^.]+$)/, " [dot] ");
 }
