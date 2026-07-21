@@ -38,9 +38,10 @@ export const viewport: Viewport = {
   ],
 };
 
-/* Set the theme before first paint so there's no flash. Reads a saved choice,
-   else the OS preference. Inline + blocking on purpose — it must run pre-render. */
-const themeScript = `(function(){try{var t=localStorage.getItem('theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();`;
+/* Set the theme before first paint so there's no flash. Defaults to light (like
+   the reference); only a saved choice overrides it. Inline + blocking on purpose
+   — it must run pre-render. */
+const themeScript = `(function(){try{var t=localStorage.getItem('theme')||'light';document.documentElement.dataset.theme=t;}catch(e){document.documentElement.dataset.theme='light';}})();`;
 
 export default function RootLayout({
   children,

@@ -53,18 +53,20 @@ export const socials: { name: string; platform: string; href: string | null }[] 
   { name: profile.name, platform: "linkedin", href: LINKEDIN },
 ];
 
-export type Research = { name: string; href: string | null; note: string };
+export type Research = { name: string; href: string | null; date: string; note: string };
 
-/** The /research page. Richer notes than the home list — it's the detail page. */
+/** The /research page — laid out like the reference's /projects sub-page. */
 export const research: Research[] = [
   {
     name: "Shepherd-AI",
     href: "https://github.com/cyberuniversal/shepherd-ai",
+    date: "2026 – Present",
     note: "A Python simulation prototype for natural-language multi-drone mission planning — translating typed or spoken commands into structured intents, grounded map references, and initial mission plans. Command-parsing baselines, a DistilBERT span extractor, Whisper speech-input scaffolding, deterministic grounding, operator clarification, and an initial planner; validated 22/22 human-written commands on the custom simulation map.",
   },
   {
     name: "Musahhih",
     href: "https://github.com/ALBA7OOTH-Research-Lab/Musahhih",
+    date: "2026 – Present",
     note: "Modern Standard Arabic grammatical error correction with open-weight models — comparing untouched and prompt-only baselines against LoRA/QLoRA fine-tuning on natural, synthetic, and mixed corpora. Improved exact-match correction on held-out Nahw-Passage from 16.83% to 28.38% (86/511 to 145/511) with the selected QLoRA checkpoint.",
   },
 ];

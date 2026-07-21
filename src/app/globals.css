@@ -118,3 +118,18 @@ hr {
 .link:hover {
   text-decoration: underline;
 }
+
+/* Project/research entry — measured from the reference's /projects page. */
+.project-section h3 {
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.2;
+  margin: 0 0 8px;
+}
+.project-section p {
+  margin: 0;
+}
+.project-section p.desc {
+  margin: 10px 0 16px;
+  max-width: 80ch;
+}

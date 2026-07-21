@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 const year = new Date().getFullYear();
 
 /**
- * The /research sub-page, reached from "Research here" on the home page.
- * Same README aesthetic; the header path links back home. Detail notes are
- * richer than the home list because this is where the detail belongs.
+ * /research, laid out element-for-element like the reference's /projects page:
+ * header (name links home) → title → <hr> → [project-section, <hr>] per entry →
+ * "← Back to Home" → copyright → toggle.
  */
 export default function ResearchPage() {
   return (
@@ -31,43 +31,39 @@ export default function ResearchPage() {
       <p>
         <strong>Research</strong>
       </p>
-      <p>
-        <em>Both papers in progress.</em>
-      </p>
 
       <hr />
 
-      <div className="list">
-        {research.map((r) => (
-          <p key={r.name} className="list" style={{ marginBottom: "16px", maxWidth: "80ch" }}>
-            <span className="role-name">
-              {r.name} <em>(in progress)</em>
-            </span>
-            <span>
-              @ <L href={r.href}>github</L>
-            </span>
-            <span style={{ display: "block", color: "var(--muted)", marginTop: "4px" }}>
-              {r.note}
-            </span>
-          </p>
-        ))}
+      {research.map((r) => (
+        <div key={r.name}>
+          <div className="project-section">
+            <h3>
+              <L href={r.href}>{r.name}</L>
+            </h3>
+            <p>
+              <strong>{r.date}</strong> · <em>paper in progress</em>
+            </p>
+            <p className="desc">{r.note}</p>
+          </div>
+          <hr />
+        </div>
+      ))}
 
-        <hr />
+      <p>
+        <Link href="/">← Back to Home</Link>
+      </p>
 
-        <p>
-          <Link href="/">← back</Link>
-        </p>
-        <p>
-          <ThemeToggle />
-        </p>
+      <br />
 
-        <br />
-        <br />
+      <p>
+        © {profile.name} — {year}
+      </p>
+      <p>
+        <ThemeToggle />
+      </p>
 
-        <p>
-          © {profile.name} — {year}
-        </p>
-      </div>
+      <br />
+      <br />
     </div>
   );
 }
