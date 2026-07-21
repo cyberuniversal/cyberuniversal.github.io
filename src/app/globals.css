@@ -119,6 +119,21 @@ hr {
   text-decoration: underline;
 }
 
+/* Arabic renders larger than Latin in the mono fallback; size it down so
+   العربية sits on the same visual level as English. */
+.ar {
+  font-size: 0.82em;
+}
+
+/* Right-to-left when Arabic is active. */
+[dir="rtl"] .container {
+  text-align: right;
+}
+/* Keep "@ org" and email/username reading left-to-right inside RTL lines. */
+[dir="rtl"] .role-name + span {
+  unicode-bidi: isolate;
+}
+
 /* Project/research entry — measured from the reference's /projects page. */
 .project-section h3 {
   font-size: 28px;

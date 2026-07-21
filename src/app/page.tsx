@@ -1,4 +1,5 @@
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { LangSwitcher } from "@/components/LangSwitcher";
 import { L } from "@/components/L";
 import {
   profile,
@@ -10,9 +11,8 @@ import {
 } from "@/data/portfolio";
 
 /**
- * Structure copied from bwu.ai: container → [name]/README.txt → name → bio →
- * "X here" links → <hr> → roles → <hr> → repos + socials → email → <hr> →
- * languages · toggle · copyright.
+ * Structure copied from bwu.ai. `data-i18n` marks text the LangSwitcher
+ * translates; proper nouns (names, orgs, username, email) stay untranslated.
  */
 
 const year = new Date().getFullYear();
@@ -30,17 +30,18 @@ export default function Home() {
       <p></p>
 
       <p>
-        <strong>{profile.name}</strong>
+        <strong data-i18n="name">{profile.name}</strong>
       </p>
-      <p>{profile.bio}</p>
+      <p data-i18n="bio">{profile.bio}</p>
 
-      {/* "X here" links, stacked tight (p.list = no margin) so Projects and
-          Research sit right below each other. */}
+      {/* "X here" links, stacked tight so they sit right below each other. */}
       <div>
         {hereLinks.map((l) => (
           <p key={l.label} className="list">
-            <span>{l.label} </span>
-            <L href={l.href}>here</L>
+            <span data-i18n={l.labelKey}>{l.label}</span>{" "}
+            <L href={l.href}>
+              <span data-i18n="here">here</span>
+            </L>
           </p>
         ))}
       </div>
@@ -51,10 +52,15 @@ export default function Home() {
         {roles.map((r, i) => {
           const Name = r.bold ? "strong" : "span";
           return (
-            <div key={r.name + r.org}>
+            <div key={r.key}>
               <p className="list">
-                <Name className="role-name">{r.name}</Name>
-                <span>@ {r.org}</span>
+                <Name className="role-name" data-i18n={r.key}>
+                  {r.name}
+                </Name>
+                <span>
+                  @{" "}
+                  {r.orgKey ? <span data-i18n={r.orgKey}>{r.org}</span> : r.org}
+                </span>
               </p>
               {i === rolesSplitAfter - 1 && <br />}
             </div>
@@ -89,7 +95,7 @@ export default function Home() {
 
         <hr />
 
-        <p>Languages I speak: {profile.languages}</p>
+        <LangSwitcher />
         <p>
           <ThemeToggle />
         </p>

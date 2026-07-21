@@ -18,24 +18,30 @@ export const profile = {
   languages: "العربية · English",
 } as const;
 
-/** "X here" links. Projects → GitHub; Research → the /research page. */
-export const hereLinks: { label: string; href: string | null }[] = [
-  { label: "Projects", href: GITHUB },
-  { label: "Research", href: "/research" },
+/** "X here" links. `labelKey` ties into the Arabic translation map. */
+export const hereLinks: { label: string; labelKey: string; href: string | null }[] = [
+  { label: "Writings", labelKey: "writings", href: null }, // TODO: target URL
+  { label: "Research", labelKey: "research", href: "/research" },
 ];
 
-export type Role = { name: string; org: string; bold?: boolean };
+export type Role = {
+  name: string;
+  org: string;
+  bold?: boolean;
+  /** data-i18n keys for the translation feature. */
+  key: string;
+  orgKey?: string;
+};
 
-/** One line each: role-name (307px column) + "@ org". bold = education. */
+/** One line each: role-name column + "@ org". bold = education. Order set by
+ *  Mohammed: education, then Founder → Founder & Research Lead → CTO → UCSC. */
 export const roles: Role[] = [
-  { name: "Grade 11, expected 2027", org: "Secondary School, Riyadh", bold: true },
-  { name: "Gifted Student (MMCAT)", org: "Mawhiba", bold: true },
-  { name: "AI Explainability Research", org: "UC Santa Cruz — Prof. Leilani H. Gilpin" },
-  { name: "Founder & Research Lead", org: "ALBA7OOTH Research Lab" },
-  { name: "Co-Founder & CTO", org: "BiQiyas" },
-  { name: "Co-Founder & CTO", org: "Youth Ink Network" },
-  { name: "Founder", org: "Halaqaat" },
-  { name: "2nd Place, Programming Path", org: "Defensethon Hackathon" },
+  { name: "Grade 11, expected 2027", org: "Secondary School, Riyadh", bold: true, key: "r_grade", orgKey: "o_school" },
+  { name: "Gifted Student (MMCAT)", org: "Mawhiba", bold: true, key: "r_gifted", orgKey: "o_mawhiba" },
+  { name: "Founder", org: "Halaqaat", key: "r_founder" },
+  { name: "Founder & Research Lead", org: "ALBA7OOTH Research Lab", key: "r_frl" },
+  { name: "Co-Founder & CTO", org: "Youth Ink Network", key: "r_cto" },
+  { name: "AI Explainability Research", org: "UC Santa Cruz — Prof. Leilani H. Gilpin", key: "r_aix" },
 ];
 
 /** Blank line between education and experience. */
@@ -43,9 +49,9 @@ export const rolesSplitAfter = 2;
 
 export type Repo = { name: string; href: string | null; inProgress?: boolean };
 
-/** Main-page repos, "name@ github". Shepherd-AI + Musahhih moved to /research. */
+/** Main-page repos, "name@ github". */
 export const repos: Repo[] = [
-  { name: "Glucose Guardian", href: GITHUB },
+  { name: "cyberuniversal", href: GITHUB },
 ];
 
 /** Rendered "name@ platform". */
