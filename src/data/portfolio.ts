@@ -59,13 +59,48 @@ export const socials: { name: string; platform: string; href: string | null }[] 
   { name: profile.name, platform: "linkedin", href: LINKEDIN },
 ];
 
-export type Writing = { title: string; date: string; href: string | null };
+export type Writing = {
+  /** URL segment: /writings/<slug>/ */
+  slug: string;
+  title: string;
+  /** YYYY-MM-DD */
+  date: string;
+  /** Optional italic line under the date. */
+  subtitle?: string;
+  /**
+   * The post itself. Blank line = new paragraph.
+   * Lines starting with "> " become a blockquote.
+   * A paragraph wrapped in **double asterisks** becomes a bold section label.
+   */
+  body: string;
+};
 
-/** The /writings page — bwu.ai/blog style (title + date, no description).
- *  Empty until Mohammed provides real entries. Nothing invented. */
-// Add entries here — they sort newest-first automatically.
-// { title: "Post title", date: "2026-07-21", href: "https://..." }
-export const writings: Writing[] = [];
+/**
+ * Posts live on this site at /writings/<slug>/ — they are not external links.
+ * Add entries here; the index sorts them newest-first automatically.
+ */
+export const writings: Writing[] = [
+  {
+    slug: "the-scales-of-the-hereafter",
+    title: "The Scales of the Hereafter",
+    date: "2026-07-21",
+    body: `One of the verses that I find profoundly thought-provoking is ALLĀH’S (ﷻ) statement:
+
+> “Whoever seeks a religion other than ʾIslām, it will never be accepted from him, and in the Hereafter he will be among the losers.” (Qurʾān 3:85)
+
+What stands out to me is not only the rejection of any religion besides ʾIslām, but the way the verse concludes: “and in the Hereafter he will be among the losers.”
+
+This reminds us that, in ALLĀH’S (ﷻ) sight, true success and true failure are not ultimately measured by what happens in this world. They are measured by the reality of the Hereafter. Our wealth, status, influence, achievements, or hardships in this life are not the scales by which ALLĀH (ﷻ) determines whether we have truly succeeded. Those things may have significance within the temporary life of this world, but they are not the final measure of a person's worth before their Lord.
+
+A person may appear successful by every worldly standard, wealthy, respected, powerful, admired, yet arrive before ALLĀH (ﷻ) having lost everything that truly mattered. Another person may live a life filled with hardship, obscurity, and sacrifice, yet stand before ALLĀH (ﷻ) among the successful. The decisive criterion is not what people think of us, nor what we possess, but where we stand when we meet our Creator.
+
+I think this is one of the greatest corrections the Qurʾān repeatedly makes to the human mindset. We naturally become preoccupied with worldly goals because they are immediate and visible. We worry about careers, finances, recognition, and comfort, often treating them as though they define our success. The Qurʾān consistently redirects our attention to a different scale, the scale of the Hereafter. That is where gain and loss become absolute and irreversible.
+
+This theme appears throughout the Qurʾān because ALLĀH (ﷻ) leaves no excuse for humanity after sending His messengers. The message is repeated from different angles until the distinction between appearances and reality becomes unmistakably clear. If we truly internalized this perspective, many of our anxieties would be placed in their proper context, and many of our priorities would naturally change.
+
+The life of this world has its place, but it is never the final verdict. The only success that ultimately matters is the success that remains after death, and the only loss that truly matters is the loss that accompanies a person into the Hereafter. Everything else is temporary. The scales of the Hereafter are the only scales that will never be overturned.`,
+  },
+];
 
 export type Research = { name: string; href: string | null; date: string; note: string };
 

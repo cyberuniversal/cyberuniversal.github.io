@@ -134,6 +134,44 @@ hr {
   unicode-bidi: isolate;
 }
 
+/* ---- post pages, measured from the reference's /blog/read/<slug> ---- */
+
+/* Posts read narrower than the index pages. */
+.container.narrow {
+  max-width: 720px;
+}
+
+.post h1 {
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1.2;
+  margin: 0 0 16px;
+}
+.post h5 {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.2;
+  margin: 0;
+}
+.post blockquote {
+  margin: 24px 0;
+  padding-left: 20px;
+  /* var() rather than the reference's fixed greys so it also works in dark. */
+  border-left: 3px solid var(--muted);
+  color: var(--muted);
+}
+.post blockquote p {
+  margin: 0 0 16px;
+}
+.post blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* The reference's "< back" is body-coloured, not link-blue. */
+.back-link {
+  color: var(--fg);
+}
+
 /* Project/research entry — measured from the reference's /projects page. */
 .project-section h3 {
   font-size: 28px;

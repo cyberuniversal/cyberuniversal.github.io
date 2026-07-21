@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { L } from "@/components/L";
 import { profile, writings } from "@/data/portfolio";
 
 export const metadata: Metadata = {
@@ -41,10 +40,10 @@ export default function WritingsPage() {
         [...writings]
           .sort((a, b) => b.date.localeCompare(a.date))
           .map((w) => (
-            <div key={w.title}>
+            <div key={w.slug}>
               <div className="project-section">
                 <h3>
-                  <L href={w.href}>{w.title}</L>
+                  <Link href={`/writings/${w.slug}/`}>{w.title}</Link>
                 </h3>
                 <p>
                   <strong>{w.date}</strong>
