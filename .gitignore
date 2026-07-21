@@ -1,4 +1,4 @@
-﻿node_modules
+node_modules
 .next
 /out
 /build
@@ -7,10 +7,6 @@
 npm-debug.log*
 .env*
 next-env.d.ts
-/shots
-# Archival originals: large, and re-fetchable via scripts/fetch-assets.mjs.
-# The licence record (manifest.json) IS tracked.
-assets-src/*.jpg
-assets-src/*.png
+tsconfig.tsbuildinfo
 # throwaway debug helpers
 scripts/_*.mjs
