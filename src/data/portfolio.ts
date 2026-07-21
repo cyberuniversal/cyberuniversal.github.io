@@ -20,7 +20,7 @@ export const profile = {
 
 /** "X here" links. `labelKey` ties into the Arabic translation map. */
 export const hereLinks: { label: string; labelKey: string; href: string | null }[] = [
-  { label: "Writings", labelKey: "writings", href: null }, // TODO: target URL
+  { label: "Writings", labelKey: "writings", href: "/writings" },
   { label: "Research", labelKey: "research", href: "/research" },
 ];
 
@@ -58,6 +58,12 @@ export const repos: Repo[] = [
 export const socials: { name: string; platform: string; href: string | null }[] = [
   { name: profile.name, platform: "linkedin", href: LINKEDIN },
 ];
+
+export type Writing = { title: string; date: string; href: string | null };
+
+/** The /writings page — bwu.ai/blog style (title + date, no description).
+ *  Empty until Mohammed provides real entries. Nothing invented. */
+export const writings: Writing[] = [];
 
 export type Research = { name: string; href: string | null; date: string; note: string };
 
