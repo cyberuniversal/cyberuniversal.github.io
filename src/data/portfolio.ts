@@ -121,7 +121,7 @@ Ultimately, ALLĀH (ﷻ) creates what He wills and chooses according to His perf
   {
   slug: "defining-who-you-are",
   title: "Defining who you are",
-  date: "2026-07-11",
+  date: "2026-07-05",
   body: `ʾIslām does not erase individuality, nor does it demand that every believer fit into a single mold. That is one of the things I find remarkable when looking at the early generations. The Companions were not copies of one another, and they were not even copies of the Prophet (ﷺ). Each of them had a distinct personality, different strengths, different temperaments, different ways of thinking and interacting with the world. What united them was not identical personalities, but a shared submission to ALLĀH (ﷻ).
 
 Sometimes people assume that becoming more religious means becoming less like yourself, as though ʾIslām requires everyone to speak the same way, think the same way, or express themselves in the same manner. That is not what we see in the Prophetic example. ʾIslām shapes our morals, beliefs, priorities, and conduct, but it does not abolish the unique traits that ALLĀH (ﷻ) created within each individual. The goal is not uniformity; it is righteousness.
