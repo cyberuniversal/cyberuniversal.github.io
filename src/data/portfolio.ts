@@ -100,6 +100,23 @@ This theme appears throughout the Qurʾān because ALLĀH (ﷻ) leaves no excuse
 
 The life of this world has its place, but it is never the final verdict. The only success that ultimately matters is the success that remains after death, and the only loss that truly matters is the loss that accompanies a person into the Hereafter. Everything else is temporary. The scales of the Hereafter are the only scales that will never be overturned.`,
   },
+
+  {
+  slug: "trust-who-created-you",
+  title: "Trust who created you",
+  date: "2026-07-11",
+  body: `One of the greatest spiritual trials I think many people face today is the experience of making duʿāʾ repeatedly and feeling as though it goes unanswered. For some, this trial becomes so overwhelming that it shakes their faith itself. I have come across accounts of people who, after enduring prolonged hardship without seeing the relief they desperately prayed for, found themselves wrestling with thoughts they never imagined they would have. This is not because the trial itself is unique, but because many people encounter it without the spiritual foundation needed to bear it.
+
+A person who has spent years nurturing their relationship with ALLĀH (ﷻ) through worship, remembrance, patience, and obedience often possesses a reserve of faith that sustains them during hardship. That does not mean they are immune to pain, but it means they have something to hold onto when everything else seems to collapse. By contrast, when hardship arrives while a person is spiritually neglected, the trial can feel unbearable. Of course, there are countless examples of believers who remained patient and steadfast through immense suffering, and their faith became the very thing that carried them.
+
+The scholars have spoken extensively about the relationship between duʿāʾ and divine decree. The answer to a supplication is not always what we expect. ALLĀH (ﷻ) may remove a calamity because of it, delay its reward until the Hereafter, or grant something better than what was requested. These are well-known principles. But there are two points that I think deserve much more reflection.
+
+The first is that ALLĀH (ﷻ) may withhold the specific outcome we ask for because the trial itself serves a greater wisdom that extends beyond us. Sometimes an individual's hardship becomes a lesson, a reminder, or a source of benefit for countless other believers. What appears to us as an unanswered prayer may actually be ALLĀH (ﷻ) allowing events to unfold according to a wisdom whose benefit is far greater than the immediate relief we seek. In that case, ALLĀH (ﷻ) has not ignored the supplication. Rather, He has preserved its reward while allowing His greater wisdom to take its course.
+
+The second point is something people often overlook entirely: one of the greatest immediate answers to duʿāʾ is not necessarily the removal of the trial, but the ability to endure it. Patience, certainty, inner peace, and steadfastness are themselves immense gifts from ALLĀH (ﷻ). Many people lose themselves in hardship. They become consumed by anger, despair, or resentment, damaging both their worldly lives and their relationship with ALLĀH (ﷻ). Yet another person faces the same hardship with patience and hope, continuing to worship and trust their Lord. It is easy to assume that this resilience comes solely from one's own strength of faith, when in reality it may be one of ALLĀH’S (ﷻ) greatest responses to that person's constant supplication, humility, and dependence upon Him.
+
+Ultimately, ALLĀH (ﷻ) creates what He wills and chooses according to His perfect knowledge and wisdom. Our perspective is limited to what we can see in the present moment, whereas His wisdom encompasses every consequence, every benefit, and every outcome. The believer's task is to continue calling upon ALLĀH (ﷻ) with certainty, knowing that no sincere duʿāʾ is ever lost, even if its answer arrives in a form we did not expect.`,
+}
 ];
 
 export type Research = { name: string; href: string | null; date: string; note: string };
