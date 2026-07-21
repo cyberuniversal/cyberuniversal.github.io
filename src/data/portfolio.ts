@@ -63,6 +63,8 @@ export type Writing = { title: string; date: string; href: string | null };
 
 /** The /writings page — bwu.ai/blog style (title + date, no description).
  *  Empty until Mohammed provides real entries. Nothing invented. */
+// Add entries here — they sort newest-first automatically.
+// { title: "Post title", date: "2026-07-21", href: "https://..." }
 export const writings: Writing[] = [];
 
 export type Research = { name: string; href: string | null; date: string; note: string };

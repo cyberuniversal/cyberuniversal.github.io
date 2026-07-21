@@ -37,19 +37,22 @@ export default function WritingsPage() {
       {writings.length === 0 ? (
         <p style={{ color: "var(--muted)" }}>Nothing published yet.</p>
       ) : (
-        writings.map((w) => (
-          <div key={w.title}>
-            <div className="project-section">
-              <h3>
-                <L href={w.href}>{w.title}</L>
-              </h3>
-              <p>
-                <strong>{w.date}</strong>
-              </p>
+        // Newest first, so entries can be added to the array in any order.
+        [...writings]
+          .sort((a, b) => b.date.localeCompare(a.date))
+          .map((w) => (
+            <div key={w.title}>
+              <div className="project-section">
+                <h3>
+                  <L href={w.href}>{w.title}</L>
+                </h3>
+                <p>
+                  <strong>{w.date}</strong>
+                </p>
+              </div>
+              <hr />
             </div>
-            <hr />
-          </div>
-        ))
+          ))
       )}
 
       {writings.length === 0 && <hr />}
