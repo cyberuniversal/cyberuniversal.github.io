@@ -13,7 +13,7 @@ export const profile = {
   githubUrl: GITHUB,
   linkedinUrl: LINKEDIN,
   name: "Mohammed Alnuwaiser",
-  bio: "I build autonomous systems and research how AI explains itself. Interested in autonomous UAVs, robotics, and Arabic NLP.",
+  bio: "I build autonomous systems and research how AI explains itself. Interested in autonomous UAVs, robotics, and natural language processing.",
   email: "momoalnuw@gmail.com",
   languages: "العربية · English",
 } as const;

@@ -1,11 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* Note: Next may warn that it inferred the workspace root from a stray
-     package-lock.json in the home directory. Setting `turbopack.root` here
-     breaks the React Client Manifest resolution (global-error.js not found),
-     so the warning is left alone deliberately — it is cosmetic and does not
-     affect dev, build, or output. */
+  // Static HTML export → GitHub Pages serves the `out/` folder as plain files.
+  output: "export",
+  // Pages serves /research/ as /research/index.html; trailing slash makes the
+  // clean URLs resolve without a server.
+  trailingSlash: true,
+  // No image optimizer on static hosting (the site has no <Image> anyway).
+  images: { unoptimized: true },
 };
 
 export default nextConfig;

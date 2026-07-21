@@ -15,7 +15,7 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
-const SITE = "https://mohammedalnuwaiser.com"; // TODO: confirm production domain
+const SITE = "https://cyberuniversal.github.io";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
