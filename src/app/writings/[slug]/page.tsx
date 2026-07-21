@@ -75,9 +75,6 @@ export default async function Post({ params }: Params) {
       <br />
       <br />
 
-      <h5>
-        by <em>{profile.name}</em>
-      </h5>
       <h1>{w.title}</h1>
       <p>Date: {w.date}</p>
 
