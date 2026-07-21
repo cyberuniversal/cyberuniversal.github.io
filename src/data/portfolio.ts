@@ -81,8 +81,8 @@ export type Writing = {
  */
 export const writings: Writing[] = [
   {
-    slug: "the-scales-of-the-hereafter",
-    title: "The Scales of the Hereafter",
+    slug: "the-most-important-thing",
+    title: "The most important thing",
     date: "2026-07-21",
     body: `One of the verses that I find profoundly thought-provoking is ALLĀH’S (ﷻ) statement:
 
@@ -116,7 +116,20 @@ The first is that ALLĀH (ﷻ) may withhold the specific outcome we ask for beca
 The second point is something people often overlook entirely: one of the greatest immediate answers to duʿāʾ is not necessarily the removal of the trial, but the ability to endure it. Patience, certainty, inner peace, and steadfastness are themselves immense gifts from ALLĀH (ﷻ). Many people lose themselves in hardship. They become consumed by anger, despair, or resentment, damaging both their worldly lives and their relationship with ALLĀH (ﷻ). Yet another person faces the same hardship with patience and hope, continuing to worship and trust their Lord. It is easy to assume that this resilience comes solely from one's own strength of faith, when in reality it may be one of ALLĀH’S (ﷻ) greatest responses to that person's constant supplication, humility, and dependence upon Him.
 
 Ultimately, ALLĀH (ﷻ) creates what He wills and chooses according to His perfect knowledge and wisdom. Our perspective is limited to what we can see in the present moment, whereas His wisdom encompasses every consequence, every benefit, and every outcome. The believer's task is to continue calling upon ALLĀH (ﷻ) with certainty, knowing that no sincere duʿāʾ is ever lost, even if its answer arrives in a form we did not expect.`,
-}
+  },
+
+  {
+  slug: "defining-who-you-are",
+  title: "Defining who you are",
+  date: "2026-07-11",
+  body: `ʾIslām does not erase individuality, nor does it demand that every believer fit into a single mold. That is one of the things I find remarkable when looking at the early generations. The Companions were not copies of one another, and they were not even copies of the Prophet (ﷺ). Each of them had a distinct personality, different strengths, different temperaments, different ways of thinking and interacting with the world. What united them was not identical personalities, but a shared submission to ALLĀH (ﷻ).
+
+Sometimes people assume that becoming more religious means becoming less like yourself, as though ʾIslām requires everyone to speak the same way, think the same way, or express themselves in the same manner. That is not what we see in the Prophetic example. ʾIslām shapes our morals, beliefs, priorities, and conduct, but it does not abolish the unique traits that ALLĀH (ﷻ) created within each individual. The goal is not uniformity; it is righteousness.
+
+Developing your own personality within an Islamic framework is not something that happens overnight. It requires self-awareness, sincerity, and a genuine understanding of both yourself and your religion. You have to recognize your strengths, identify your weaknesses, refine your character, and continually align yourself with what pleases ALLĀH (ﷻ) without feeling pressured to imitate every aspect of someone else's personality.
+
+This is also a lifelong process. Your personality will continue to develop as you move through different stages of life. Your experiences, responsibilities, and perspectives change over time, and with them, so do aspects of who you are. The important thing is that, throughout every stage, your identity remains rooted in ʾIslām while still being authentically your own. Islam provides the boundaries and direction, but within those boundaries there is room for individuality, growth, and the unique person ALLĀH (ﷻ) created you to be.`,
+},
 ];
 
 export type Research = { name: string; href: string | null; date: string; note: string };
