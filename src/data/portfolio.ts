@@ -15,7 +15,7 @@ export const profile = {
   name: "Mohammed Alnuwaiser",
   bio: "I build autonomous systems and research how AI explains itself. Interested in autonomous UAVs, robotics, and natural language processing.",
   email: "momoalnuw@gmail.com",
-  languages: "العربية · English",
+  languages: "عربي · English",
 } as const;
 
 /** "X here" links. `labelKey` ties into the Arabic translation map. */
